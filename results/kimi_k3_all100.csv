@@ -1,0 +1,726 @@
+model,slug,id,difficulty,categories,question,gold_sql,gold_result,gold_n_rows,model_sql,model_result,model_n_rows,correct,reason,error,latency_s,finish_reason,prompt_tokens,completion_tokens,reasoning_tokens,cost_usd
+Kimi K3,moonshotai/kimi-k3,1,easy,aggregate,How many matches were played this season?,SELECT COUNT(*) FROM matches,"{""columns"": [""COUNT(*)""], ""rows"": [[74]]}",1,"SELECT COUNT(*) AS matches_played
+FROM matches","{""columns"": [""matches_played""], ""rows"": [[74]]}",1.0,True,match,,1.72,stop,3864,51,26,0.00169008
+Kimi K3,moonshotai/kimi-k3,2,easy,"filter,aggregate",How many matches in match_results were abandoned?,SELECT COUNT(*) FROM match_results WHERE match_result = 'abandoned',"{""columns"": [""COUNT(*)""], ""rows"": [[1]]}",1,"SELECT COUNT(*) AS abandoned_matches
+FROM match_results
+WHERE match_result = 'abandoned'","{""columns"": [""abandoned_matches""], ""rows"": [[1]]}",1.0,True,match,,1.85,stop,3865,68,34,0.00192875
+Kimi K3,moonshotai/kimi-k3,3,easy,order,Which stadium has the largest capacity? Give the stadium and capacity.,"SELECT venue_stadium, capacity FROM venues ORDER BY capacity DESC LIMIT 1","{""columns"": [""venue_stadium"", ""capacity""], ""rows"": [[""Narendra Modi Stadium"", 132000]]}",1,"SELECT venue_stadium, capacity
+FROM venues
+ORDER BY capacity DESC
+LIMIT 1","{""columns"": [""venue_stadium"", ""capacity""], ""rows"": [[""Narendra Modi Stadium"", 132000]]}",1.0,True,match,,1.72,stop,3869,52,19,0.00170743
+Kimi K3,moonshotai/kimi-k3,4,easy,"filter,aggregate",How many overseas players are there across all teams?,SELECT COUNT(*) FROM players WHERE nationality = 'Overseas',"{""columns"": [""COUNT(*)""], ""rows"": [[82]]}",1,"SELECT COUNT(*) AS overseas_players
+FROM players
+WHERE nationality = 'Overseas'","{""columns"": [""overseas_players""], ""rows"": [[82]]}",1.0,True,match,,1.83,stop,3866,63,30,0.014476
+Kimi K3,moonshotai/kimi-k3,5,easy,"null,aggregate",How many players have an unknown (missing) nationality?,SELECT COUNT(*) FROM players WHERE nationality IS NULL,"{""columns"": [""COUNT(*)""], ""rows"": [[3]]}",1,"SELECT COUNT(*) AS players_with_unknown_nationality
+FROM players
+WHERE nationality IS NULL","{""columns"": [""players_with_unknown_nationality""], ""rows"": [[3]]}",1.0,True,match,,1.46,stop,3870,109,76,0.013245
+Kimi K3,moonshotai/kimi-k3,6,easy,order,"Which team code is in position 1 of the points table, and how many points does it have?","SELECT team_code, points FROM points_table WHERE position = 1","{""columns"": [""team_code"", ""points""], ""rows"": [[""PBKS"", 13]]}",1,"SELECT team_code, points
+FROM points_table
+WHERE position = 1","{""columns"": [""team_code"", ""points""], ""rows"": [[""PBKS"", 13]]}",1.0,True,match,,1.77,stop,3877,50,20,0.0143195
+Kimi K3,moonshotai/kimi-k3,7,easy,"aggregate,domain",How many wides were bowled in the whole season?,SELECT SUM(wide) FROM deliveries,"{""columns"": [""SUM(wide)""], ""rows"": [[745]]}",1,"SELECT SUM(wide) AS total_wides
+FROM deliveries","{""columns"": [""total_wides""], ""rows"": [[745]]}",1.0,True,match,,3.39,stop,3867,158,131,0.00319009
+Kimi K3,moonshotai/kimi-k3,8,easy,aggregate,What is the highest first-innings score recorded in match_results?,SELECT MAX(first_ings_score) FROM match_results,"{""columns"": [""MAX(first_ings_score)""], ""rows"": [[264]]}",1,"SELECT MAX(first_ings_score) AS highest_first_ings_score
+FROM match_results","{""columns"": [""highest_first_ings_score""], ""rows"": [[264]]}",1.0,True,match,,1.59,stop,3869,64,32,0.00187543
+Kimi K3,moonshotai/kimi-k3,9,easy,"filter,aggregate",How many matches were played in the Playoffs stage?,SELECT COUNT(*) FROM matches WHERE stage = 'Playoffs',"{""columns"": [""COUNT(*)""], ""rows"": [[3]]}",1,"SELECT COUNT(*) AS matches_played
+FROM matches
+WHERE stage = 'Playoffs'","{""columns"": [""matches_played""], ""rows"": [[3]]}",1.0,True,match,,1.5,stop,3867,55,23,0.00174809
+Kimi K3,moonshotai/kimi-k3,10,easy,"filter,aggregate",How many sixes were hit in the whole season?,SELECT COUNT(*) FROM deliveries WHERE runs_of_bat = 6,"{""columns"": [""COUNT(*)""], ""rows"": [[1426]]}",1,"SELECT COUNT(*) AS sixes
+FROM deliveries
+WHERE runs_of_bat = 6","{""columns"": [""sixes""], ""rows"": [[1426]]}",1.0,True,match,,2.7,stop,3867,125,92,0.00272809
+Kimi K3,moonshotai/kimi-k3,11,easy,"filter,aggregate,domain",How many deliveries were bowled in super overs (innings 3 and 4)?,SELECT COUNT(*) FROM deliveries WHERE innings > 2,"{""columns"": [""COUNT(*)""], ""rows"": [[4]]}",1,"SELECT COUNT(*) AS super_over_deliveries
+FROM deliveries
+WHERE innings IN (3, 4)","{""columns"": [""super_over_deliveries""], ""rows"": [[4]]}",1.0,True,match,,2.63,stop,3874,123,87,0.00270478
+Kimi K3,moonshotai/kimi-k3,12,easy,"null,aggregate",How many venues have an unknown capacity?,SELECT COUNT(*) FROM venues WHERE capacity IS NULL,"{""columns"": [""COUNT(*)""], ""rows"": [[1]]}",1,"SELECT COUNT(*) AS venues_with_unknown_capacity
+FROM venues
+WHERE capacity IS NULL","{""columns"": [""venues_with_unknown_capacity""], ""rows"": [[1]]}",1.0,True,match,,1.72,stop,3864,92,61,0.00226408
+Kimi K3,moonshotai/kimi-k3,13,easy,"filter,aggregate",How many players are listed as Wicket Keeper?,SELECT COUNT(*) FROM players WHERE role = 'Wicket Keeper',"{""columns"": [""COUNT(*)""], ""rows"": [[29]]}",1,"SELECT COUNT(*) AS wicket_keeper_count
+FROM players
+WHERE role = 'Wicket Keeper'","{""columns"": [""wicket_keeper_count""], ""rows"": [[29]]}",1.0,True,match,,2.01,stop,3866,90,56,0.00223742
+Kimi K3,moonshotai/kimi-k3,14,easy,aggregate,How many different bowlers bowled at least one delivery this season?,SELECT COUNT(DISTINCT bowler_id) FROM deliveries,"{""columns"": [""COUNT(DISTINCT bowler_id)""], ""rows"": [[125]]}",1,"SELECT COUNT(DISTINCT bowler_id) AS num_bowlers
+FROM deliveries","{""columns"": [""num_bowlers""], ""rows"": [[125]]}",1.0,True,match,,1.89,stop,3870,103,72,0.0024221
+Kimi K3,moonshotai/kimi-k3,15,easy,"filter,aggregate",How many batters in batting_stats have a strike rate above 180?,SELECT COUNT(*) FROM batting_stats WHERE strike_rate > 180,"{""columns"": [""COUNT(*)""], ""rows"": [[8]]}",1,"SELECT COUNT(*) AS batter_count
+FROM batting_stats
+WHERE strike_rate > 180","{""columns"": [""batter_count""], ""rows"": [[8]]}",1.0,True,match,,1.82,stop,3871,93,61,0.00228277
+Kimi K3,moonshotai/kimi-k3,16,easy,"date,aggregate",How many matches were played in May?,"SELECT COUNT(*) FROM matches WHERE strftime('%m', date) = '05'","{""columns"": [""COUNT(*)""], ""rows"": [[32]]}",1,"SELECT COUNT(*) AS matches_in_may
+FROM matches
+WHERE strftime('%m', date) = '05'","{""columns"": [""matches_in_may""], ""rows"": [[32]]}",1.0,True,match,,2.59,stop,3864,123,85,0.00269808
+Kimi K3,moonshotai/kimi-k3,17,easy,aggregate,What is the total number of runs (runs off the bat plus extras) scored in the whole season?,SELECT SUM(runs_of_bat + extras) FROM deliveries,"{""columns"": [""SUM(runs_of_bat + extras)""], ""rows"": [[27396]]}",1,"SELECT SUM(runs_of_bat + extras) AS total_runs
+FROM deliveries","{""columns"": [""total_runs""], ""rows"": [[27396]]}",1.0,True,match,,2.26,stop,3877,127,95,0.00276279
+Kimi K3,moonshotai/kimi-k3,18,easy,"filter,aggregate",How many teams in the points table have a positive net run rate?,SELECT COUNT(*) FROM points_table WHERE nrr > 0,"{""columns"": [""COUNT(*)""], ""rows"": [[5]]}",1,"SELECT COUNT(*) AS teams_with_positive_nrr
+FROM points_table
+WHERE nrr > 0","{""columns"": [""teams_with_positive_nrr""], ""rows"": [[5]]}",1.0,True,match,,1.9,stop,3870,90,55,0.0022401
+Kimi K3,moonshotai/kimi-k3,19,easy,"filter,aggregate",How many deliveries were bowled in the 20th (last) over of an innings? Over numbers start at 0.,SELECT COUNT(*) FROM deliveries WHERE over_no = 19,"{""columns"": [""COUNT(*)""], ""rows"": [[600]]}",1,"SELECT COUNT(*) AS deliveries_in_20th_over
+FROM deliveries
+WHERE over_no = 19","{""columns"": [""deliveries_in_20th_over""], ""rows"": [[600]]}",1.0,True,match,,2.97,stop,3882,154,119,0.00314414
+Kimi K3,moonshotai/kimi-k3,20,easy,aggregate,How many fielding credits went to substitute fielders?,SELECT SUM(is_substitute) FROM delivery_fielders,"{""columns"": [""SUM(is_substitute)""], ""rows"": [[13]]}",1,"SELECT COUNT(*) AS substitute_fielding_credits
+FROM delivery_fielders
+WHERE is_substitute = 1","{""columns"": [""substitute_fielding_credits""], ""rows"": [[13]]}",1.0,True,match,,2.33,stop,3867,131,94,0.00281209
+Kimi K3,moonshotai/kimi-k3,21,medium,"join,order","According to batting_stats, which player scored the most runs? Give the player's name and runs.","SELECT p.player_name, b.runs FROM batting_stats b JOIN players p ON p.player_id = b.player_id ORDER BY b.runs DESC LIMIT 1","{""columns"": [""player_name"", ""runs""], ""rows"": [[""Abhishek Sharma"", 380]]}",1,"SELECT p.player_name, b.runs
+FROM batting_stats b
+JOIN players p ON p.player_id = b.player_id
+ORDER BY b.runs DESC
+LIMIT 1","{""columns"": [""player_name"", ""runs""], ""rows"": [[""Abhishek Sharma"", 380]]}",1.0,True,match,,2.88,stop,3875,160,109,0.00322345
+Kimi K3,moonshotai/kimi-k3,22,medium,"join,order","According to bowling_stats, which bowler has the best (lowest) economy? Give the name and economy.","SELECT p.player_name, s.economy FROM bowling_stats s JOIN players p ON p.player_id = s.player_id ORDER BY s.economy ASC LIMIT 1","{""columns"": [""player_name"", ""economy""], ""rows"": [[""Mohsin Khan"", 6.37]]}",1,"SELECT p.player_name, b.economy
+FROM bowling_stats b
+JOIN players p ON p.player_id = b.player_id
+ORDER BY b.economy ASC
+LIMIT 1","{""columns"": [""player_name"", ""economy""], ""rows"": [[""Mohsin Khan"", 6.37]]}",1.0,True,match,,3.36,stop,3878,175,122,0.00343546
+Kimi K3,moonshotai/kimi-k3,23,medium,join,"What is the full name of the team at position 1 of the points table, and how many points does it have?","SELECT t.team_name, pt.points FROM points_table pt JOIN teams t ON t.team_code = pt.team_code WHERE pt.position = 1","{""columns"": [""team_name"", ""points""], ""rows"": [[""Punjab Kings"", 13]]}",1,"SELECT t.team_name, p.points
+FROM points_table p
+JOIN teams t ON p.team_code = t.team_code
+WHERE p.position = 1","{""columns"": [""team_name"", ""points""], ""rows"": [[""Punjab Kings"", 13]]}",1.0,True,match,,1.78,stop,3881,103,57,0.00242947
+Kimi K3,moonshotai/kimi-k3,24,medium,"join,filter",List every captain's name together with the full name of their team.,"SELECT p.player_name, t.team_name FROM players p JOIN teams t ON t.team_code = p.team_code WHERE p.is_captain = 1","{""columns"": [""player_name"", ""team_name""], ""rows"": [[""Hardik Pandya"", ""Mumbai Indians""], [""Ruturaj Gaikwad"", ""Chennai Super Kings""], [""Ajinkya Rahane"", ""Kolkata Knight Riders""], [""Rajat Patidar"", ""Royal Challengers Bengaluru""], [""Shubman Gill"", ""Gujarat Titans""], [""Riyan Parag"", ""Rajasthan Royals""], [""Ishan Kishan"", ""Sunrisers Hyderabad""], [""Shreyas Iyer"", ""Punjab Kings""], [""Axar Patel"", ""Delhi Capitals""], [""Rishabh Pant"", ""Lucknow Super Giants""]]}",10,"SELECT p.player_name, t.team_name
+FROM players p
+JOIN teams t ON p.team_code = t.team_code
+WHERE p.is_captain = 1","{""columns"": [""player_name"", ""team_name""], ""rows"": [[""Hardik Pandya"", ""Mumbai Indians""], [""Ruturaj Gaikwad"", ""Chennai Super Kings""], [""Ajinkya Rahane"", ""Kolkata Knight Riders""], [""Rajat Patidar"", ""Royal Challengers Bengaluru""], [""Shubman Gill"", ""Gujarat Titans""], [""Riyan Parag"", ""Rajasthan Royals""], [""Ishan Kishan"", ""Sunrisers Hyderabad""], [""Shreyas Iyer"", ""Punjab Kings""], [""Axar Patel"", ""Delhi Capitals""], [""Rishabh Pant"", ""Lucknow Super Giants""]]}",10.0,True,match,,2.55,stop,3870,146,97,0.0030241
+Kimi K3,moonshotai/kimi-k3,25,medium,"join,group,order",Which batter scored the most runs off the bat this season? Give the name and runs.,"SELECT p.player_name, SUM(d.runs_of_bat) AS r FROM deliveries d JOIN players p ON p.player_id = d.striker_id GROUP BY p.player_id ORDER BY r DESC LIMIT 1","{""columns"": [""player_name"", ""r""], ""rows"": [[""Vaibhav Sooryavanshi"", 776]]}",1,"SELECT p.player_name, SUM(d.runs_of_bat) AS runs
+FROM deliveries d
+JOIN players p ON p.player_id = d.striker_id
+GROUP BY d.striker_id
+ORDER BY runs DESC
+LIMIT 1","{""columns"": [""player_name"", ""runs""], ""rows"": [[""Vaibhav Sooryavanshi"", 776]]}",1.0,True,match,,2.86,stop,3874,114,51,0.00257878
+Kimi K3,moonshotai/kimi-k3,26,medium,"join,group,order",Which batter hit the most sixes this season? Give the name and number of sixes.,"SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.striker_id WHERE d.runs_of_bat = 6 GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Vaibhav Sooryavanshi"", 72]]}",1,"SELECT p.player_name, COUNT(*) AS sixes
+FROM deliveries d
+JOIN players p ON p.player_id = d.striker_id
+WHERE d.runs_of_bat = 6
+GROUP BY d.striker_id
+ORDER BY sixes DESC
+LIMIT 1","{""columns"": [""player_name"", ""sixes""], ""rows"": [[""Vaibhav Sooryavanshi"", 72]]}",1.0,True,match,,5.12,stop,3875,313,243,0.00536545
+Kimi K3,moonshotai/kimi-k3,27,medium,"join,group,order",Which batter hit the most fours this season? Give the name and number of fours.,"SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.striker_id WHERE d.runs_of_bat = 4 GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Sai Sudharsan"", 75]]}",1,"SELECT p.player_name, COUNT(*) AS fours
+FROM deliveries d
+JOIN players p ON p.player_id = d.striker_id
+WHERE d.runs_of_bat = 4
+GROUP BY d.striker_id
+ORDER BY fours DESC
+LIMIT 1","{""columns"": [""player_name"", ""fours""], ""rows"": [[""Sai Sudharsan"", 75]]}",1.0,True,match,,4.62,stop,3875,306,236,0.00526745
+Kimi K3,moonshotai/kimi-k3,28,medium,"join,group,order,domain",Which bowler bowled the most dot balls (legal deliveries with zero total runs)? Give the name and count.,"SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.bowler_id WHERE d.wide = 0 AND d.noballs = 0 AND d.runs_of_bat = 0 AND d.extras = 0 GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Kagiso Rabada"", 167]]}",1,"SELECT p.player_name, COUNT(*) AS dot_balls
+FROM deliveries d
+JOIN players p ON p.player_id = d.bowler_id
+WHERE d.wide = 0
+  AND d.noballs = 0
+  AND (d.runs_of_bat + d.extras) = 0
+GROUP BY d.bowler_id, p.player_name
+ORDER BY dot_balls DESC
+LIMIT 1","{""columns"": [""player_name"", ""dot_balls""], ""rows"": [[""Kagiso Rabada"", 167]]}",1.0,True,match,,17.84,stop,3878,912,811,0.01375346
+Kimi K3,moonshotai/kimi-k3,29,medium,"join,group,order",Which bowler bowled the most wides? Give the name and number of wides.,"SELECT p.player_name, SUM(d.wide) AS n FROM deliveries d JOIN players p ON p.player_id = d.bowler_id GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Arshdeep Singh"", 25]]}",1,"SELECT p.player_name, SUM(d.wide) AS wides
+FROM deliveries AS d
+JOIN players AS p ON p.player_id = d.bowler_id
+GROUP BY d.bowler_id, p.player_name
+ORDER BY wides DESC
+LIMIT 1","{""columns"": [""player_name"", ""wides""], ""rows"": [[""Arshdeep Singh"", 25]]}",1.0,True,match,,14.58,stop,3872,657,591,0.01017944
+Kimi K3,moonshotai/kimi-k3,30,medium,"multi-join,many-to-many,group,order",Which fielder took the most catches this season? Give the name and number of catches.,"SELECT p.player_name, COUNT(*) AS n FROM delivery_fielders f JOIN deliveries d ON d.delivery_id = f.delivery_id JOIN players p ON p.player_id = f.player_id WHERE d.wicket_type = 'caught' GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Jos Buttler"", 24]]}",1,"SELECT p.player_name, COUNT(*) AS catches
+FROM delivery_fielders df
+JOIN deliveries d ON df.delivery_id = d.delivery_id
+JOIN players p ON df.player_id = p.player_id
+WHERE d.wicket_type = 'caught'
+GROUP BY df.player_id
+ORDER BY catches DESC
+LIMIT 1","{""columns"": [""player_name"", ""catches""], ""rows"": [[""Jos Buttler"", 24]]}",1.0,True,match,,8.33,stop,3874,443,362,0.00718478
+Kimi K3,moonshotai/kimi-k3,31,medium,"join,filter",In which stadium and city was the Final played?,"SELECT v.venue_stadium, v.city FROM matches m JOIN venues v ON v.venue_id = m.venue_id WHERE m.stage = 'Final'","{""columns"": [""venue_stadium"", ""city""], ""rows"": [[""Narendra Modi Stadium"", ""Ahmedabad""]]}",1,"SELECT v.venue_stadium, v.city
+FROM matches m
+JOIN venues v ON m.venue_id = v.venue_id
+WHERE m.stage = 'Final'","{""columns"": [""venue_stadium"", ""city""], ""rows"": [[""Narendra Modi Stadium"", ""Ahmedabad""]]}",1.0,True,match,,2.04,stop,3866,137,88,0.00289542
+Kimi K3,moonshotai/kimi-k3,32,medium,"join,group,order",Which city hosted the most matches this season? Give the city and match count.,"SELECT v.city, COUNT(*) AS n FROM matches m JOIN venues v ON v.venue_id = m.venue_id GROUP BY v.city ORDER BY n DESC LIMIT 1","{""columns"": [""city"", ""n""], ""rows"": [[""Ahmedabad"", 8]]}",1,"SELECT v.city, COUNT(*) AS match_count
+FROM matches AS m
+JOIN venues AS v ON m.venue_id = v.venue_id
+GROUP BY v.city
+ORDER BY match_count DESC
+LIMIT 1","{""columns"": [""city"", ""match_count""], ""rows"": [[""Ahmedabad"", 8]]}",1.0,True,match,,5.93,stop,3872,252,193,0.00450944
+Kimi K3,moonshotai/kimi-k3,33,medium,"join,group,having,subquery,tie",Which player(s) won the most Player of the Match awards? Return all tied players with their award count.,"SELECT p.player_name, COUNT(*) AS n FROM match_results r JOIN players p ON p.player_id = r.player_of_the_match_id GROUP BY p.player_id HAVING COUNT(*) = (SELECT MAX(c) FROM (SELECT COUNT(*) AS c FROM match_results WHERE player_of_the_match_id IS NOT NULL GROUP BY player_of_the_match_id))","{""columns"": [""player_name"", ""n""], ""rows"": [[""Sanju Samson"", 2], [""Josh Hazlewood"", 2], [""Priyansh Arya"", 2], [""Sameer Rizvi"", 2]]}",4,"WITH award_counts AS (
+  SELECT player_of_the_match_id AS player_id, COUNT(*) AS award_count
+  FROM match_results
+  WHERE player_of_the_match_id IS NOT NULL
+  GROUP BY player_of_the_match_id
+)
+SELECT p.player_name, ac.award_count
+FROM award_counts ac
+JOIN players p ON p.player_id = ac.player_id
+WHERE ac.award_count = (SELECT MAX(award_count) FROM award_counts)","{""columns"": [""player_name"", ""award_count""], ""rows"": [[""Sanju Samson"", 2], [""Josh Hazlewood"", 2], [""Priyansh Arya"", 2], [""Sameer Rizvi"", 2]]}",4.0,True,match,,12.49,stop,3878,631,525,0.00981946
+Kimi K3,moonshotai/kimi-k3,34,medium,"join,aggregate,domain",In how many matches with a result did the team that batted first win?,SELECT COUNT(*) FROM match_results r JOIN matches m ON m.match_id = r.match_id WHERE r.match_winner = m.bat_first_team,"{""columns"": [""COUNT(*)""], ""rows"": [[15]]}",1,"SELECT COUNT(*) AS matches_won_by_team_batting_first
+FROM matches AS m
+JOIN match_results AS mr
+  ON mr.match_id = m.match_id
+WHERE mr.match_result = 'completed'
+  AND mr.match_winner = m.bat_first_team","{""columns"": [""matches_won_by_team_batting_first""], ""rows"": [[15]]}",1.0,True,match,,156.6,stop,3872,2534,2465,0.03645744
+Kimi K3,moonshotai/kimi-k3,35,medium,"left-join,group","For every team (full name), how many matches did it win according to match_results? Include teams with zero wins.","SELECT t.team_name, COUNT(r.match_id) FROM teams t LEFT JOIN match_results r ON r.match_winner = t.team_code GROUP BY t.team_code","{""columns"": [""team_name"", ""COUNT(r.match_id)""], ""rows"": [[""Chennai Super Kings"", 3], [""Delhi Capitals"", 3], [""Gujarat Titans"", 4], [""Kolkata Knight Riders"", 2], [""Lucknow Super Giants"", 3], [""Mumbai Indians"", 2], [""Punjab Kings"", 6], [""Royal Challengers Bengaluru"", 6], [""Rajasthan Royals"", 4], [""Sunrisers Hyderabad"", 5]]}",10,"SELECT t.team_name,
+       COUNT(mr.match_id) AS wins
+FROM teams AS t
+LEFT JOIN match_results AS mr
+  ON mr.match_winner = t.team_code
+GROUP BY t.team_code, t.team_name
+ORDER BY t.team_name","{""columns"": [""team_name"", ""wins""], ""rows"": [[""Chennai Super Kings"", 3], [""Delhi Capitals"", 3], [""Gujarat Titans"", 4], [""Kolkata Knight Riders"", 2], [""Lucknow Super Giants"", 3], [""Mumbai Indians"", 2], [""Punjab Kings"", 6], [""Rajasthan Royals"", 4], [""Royal Challengers Bengaluru"", 6], [""Sunrisers Hyderabad"", 5]]}",10.0,True,match,,9.0,stop,3880,470,402,0.0075668
+Kimi K3,moonshotai/kimi-k3,36,medium,"join,group",How many overseas players does each team have? Give the full team name and count.,"SELECT t.team_name, COUNT(*) FROM players p JOIN teams t ON t.team_code = p.team_code WHERE p.nationality = 'Overseas' GROUP BY t.team_code","{""columns"": [""team_name"", ""COUNT(*)""], ""rows"": [[""Chennai Super Kings"", 9], [""Delhi Capitals"", 8], [""Gujarat Titans"", 7], [""Kolkata Knight Riders"", 9], [""Lucknow Super Giants"", 7], [""Mumbai Indians"", 8], [""Punjab Kings"", 8], [""Royal Challengers Bengaluru"", 8], [""Rajasthan Royals"", 9], [""Sunrisers Hyderabad"", 9]]}",10,"SELECT t.team_name, COUNT(p.player_id) AS overseas_players
+FROM teams t
+JOIN players p ON p.team_code = t.team_code
+WHERE p.nationality = 'Overseas'
+GROUP BY t.team_code, t.team_name","{""columns"": [""team_name"", ""overseas_players""], ""rows"": [[""Chennai Super Kings"", 9], [""Delhi Capitals"", 8], [""Gujarat Titans"", 7], [""Kolkata Knight Riders"", 9], [""Lucknow Super Giants"", 7], [""Mumbai Indians"", 8], [""Punjab Kings"", 8], [""Royal Challengers Bengaluru"", 8], [""Rajasthan Royals"", 9], [""Sunrisers Hyderabad"", 9]]}",10.0,True,match,,4.46,stop,3873,280,214,0.00490211
+Kimi K3,moonshotai/kimi-k3,37,medium,"anti-join,multi-join",Which venues did not host any of the matches that have an entry in match_results?,SELECT v.venue_stadium FROM venues v WHERE NOT EXISTS (SELECT 1 FROM matches m JOIN match_results r ON r.match_id = m.match_id WHERE m.venue_id = v.venue_id),"{""columns"": [""venue_stadium""], ""rows"": [[""HPCA Stadium""], [""Shaheed Veer Narayan Singh International Stadium""]]}",2,"SELECT venue_stadium
+FROM venues
+WHERE venue_id NOT IN (
+    SELECT m.venue_id
+    FROM matches m
+    JOIN match_results mr ON mr.match_id = m.match_id
+)","{""columns"": [""venue_stadium""], ""rows"": [[""HPCA Stadium""], [""Shaheed Veer Narayan Singh International Stadium""]]}",2.0,True,match,,2.53,stop,3873,132,77,0.00283011
+Kimi K3,moonshotai/kimi-k3,38,medium,"multi-join,filter",What is the full name of the home team of the venue where match 35 was played?,SELECT t.team_name FROM matches m JOIN venues v ON v.venue_id = m.venue_id JOIN teams t ON t.team_code = v.home_team WHERE m.match_id = 35,"{""columns"": [""team_name""], ""rows"": [[""Delhi Capitals""]]}",1,"SELECT t.team_name
+FROM matches AS m
+JOIN venues AS v ON v.venue_id = m.venue_id
+JOIN teams AS t ON t.team_code = v.home_team
+WHERE m.match_id = 35","{""columns"": [""team_name""], ""rows"": [[""Delhi Capitals""]]}",1.0,True,match,,8.94,stop,3875,226,166,0.00414745
+Kimi K3,moonshotai/kimi-k3,39,medium,"join,aggregate,domain",How many matches were played at a venue that is the home ground of one of the two teams playing?,"SELECT COUNT(*) FROM matches m JOIN venues v ON v.venue_id = m.venue_id WHERE v.home_team IN (m.bat_first_team, m.bowl_first_team)","{""columns"": [""COUNT(*)""], ""rows"": [[69]]}",1,"SELECT COUNT(*) AS matches_played
+FROM matches m
+JOIN venues v ON v.venue_id = m.venue_id
+WHERE v.home_team IN (m.bat_first_team, m.bowl_first_team)","{""columns"": [""matches_played""], ""rows"": [[69]]}",1.0,True,match,,40.46,stop,3877,514,457,0.00818079
+Kimi K3,moonshotai/kimi-k3,40,medium,"join,group,order",Which bowler took the most wickets with the dismissal type 'bowled'? Give the name and count.,"SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.bowler_id WHERE d.wicket_type = 'bowled' GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Jofra Archer"", 7]]}",1,"SELECT p.player_name, COUNT(*) AS bowled_wickets
+FROM deliveries d
+JOIN players p ON p.player_id = d.bowler_id
+WHERE d.wicket_type = 'bowled'
+GROUP BY d.bowler_id, p.player_name
+ORDER BY bowled_wickets DESC
+LIMIT 1","{""columns"": [""player_name"", ""bowled_wickets""], ""rows"": [[""Jofra Archer"", 7]]}",1.0,True,match,,15.54,stop,3876,313,236,0.00536612
+Kimi K3,moonshotai/kimi-k3,41,medium,"join,group,order",Which player was dismissed the most times this season (any dismissal type)? Give the name and count.,"SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.player_dismissed_id GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Sai Sudharsan"", 17]]}",1,"SELECT p.player_name, COUNT(*) AS times_dismissed
+FROM deliveries AS d
+JOIN players AS p ON p.player_id = d.player_dismissed_id
+WHERE d.player_dismissed_id IS NOT NULL
+GROUP BY p.player_id, p.player_name
+ORDER BY times_dismissed DESC
+LIMIT 1","{""columns"": [""player_name"", ""times_dismissed""], ""rows"": [[""Sai Sudharsan"", 17]]}",1.0,True,match,,84.11,stop,3876,1160,1079,0.01722412
+Kimi K3,moonshotai/kimi-k3,42,medium,"group,null",How many dismissals were there of each dismissal type?,"SELECT wicket_type, COUNT(*) FROM deliveries WHERE player_dismissed_id IS NOT NULL GROUP BY wicket_type","{""columns"": [""wicket_type"", ""COUNT(*)""], ""rows"": [[""bowled"", 135], [""caught"", 658], [""hit wicket"", 3], [""lbw"", 30], [""obstructing the field"", 1], [""retired hurt"", 1], [""run out"", 38], [""stumped"", 9]]}",8,"SELECT wicket_type, COUNT(*) AS dismissals
+FROM deliveries
+WHERE player_dismissed_id IS NOT NULL
+GROUP BY wicket_type","{""columns"": [""wicket_type"", ""dismissals""], ""rows"": [[""bowled"", 135], [""caught"", 658], [""hit wicket"", 3], [""lbw"", 30], [""obstructing the field"", 1], [""retired hurt"", 1], [""run out"", 38], [""stumped"", 9]]}",8.0,True,match,,29.3,stop,3867,410,368,0.00671809
+Kimi K3,moonshotai/kimi-k3,43,medium,join,"For every player in fielding_stats, give the player's name and squad role.","SELECT p.player_name, p.role FROM fielding_stats f JOIN players p ON p.player_id = f.player_id","{""columns"": [""player_name"", ""role""], ""rows"": [[""Naman Dhir"", ""All Rounder""], [""Tilak Varma"", ""Batter""], [""Dewald Brevis"", ""Batter""], [""Rinku Singh"", ""Batter""], [""Devdutt Padikal"", ""Batter""], [""Phil Salt"", ""Wicket Keeper""], [""Shubman Gill"", ""Batter""], [""Glenn Phillips"", ""All Rounder""], [""Shimron Hetmyer"", ""Batter""], [""Donovan Ferreira"", ""All Rounder""], [""Ravi Bishnoi"", ""Bowler""], [""Heinrich Klaasen"", ""Wicket Keeper""], [""Nitish Kumar Reddy"", ""All Rounder""], [""Xavier Bartlett"", ""Bowler""], [""Aiden Markram"", ""Batter""]]}",15,"SELECT p.player_name, p.role
+FROM fielding_stats fs
+JOIN players p ON p.player_id = fs.player_id","{""columns"": [""player_name"", ""role""], ""rows"": [[""Naman Dhir"", ""All Rounder""], [""Tilak Varma"", ""Batter""], [""Dewald Brevis"", ""Batter""], [""Rinku Singh"", ""Batter""], [""Devdutt Padikal"", ""Batter""], [""Phil Salt"", ""Wicket Keeper""], [""Shubman Gill"", ""Batter""], [""Glenn Phillips"", ""All Rounder""], [""Shimron Hetmyer"", ""Batter""], [""Donovan Ferreira"", ""All Rounder""], [""Ravi Bishnoi"", ""Bowler""], [""Heinrich Klaasen"", ""Wicket Keeper""], [""Nitish Kumar Reddy"", ""All Rounder""], [""Xavier Bartlett"", ""Bowler""], [""Aiden Markram"", ""Batter""]]}",15.0,True,match,,11.25,stop,3872,142,102,0.00296944
+Kimi K3,moonshotai/kimi-k3,44,medium,join,Which players appear in both batting_stats and fielding_stats? Give their names.,SELECT p.player_name FROM batting_stats b JOIN fielding_stats f ON f.player_id = b.player_id JOIN players p ON p.player_id = b.player_id,"{""columns"": [""player_name""], ""rows"": [[""Devdutt Padikal""], [""Shubman Gill""], [""Heinrich Klaasen""]]}",3,"SELECT p.player_name
+FROM players p
+WHERE p.player_id IN (SELECT player_id FROM batting_stats)
+  AND p.player_id IN (SELECT player_id FROM fielding_stats)","{""columns"": [""player_name""], ""rows"": [[""Devdutt Padikal""], [""Shubman Gill""], [""Heinrich Klaasen""]]}",3.0,True,match,,13.07,stop,3872,157,106,0.00317944
+Kimi K3,moonshotai/kimi-k3,45,medium,"set-op,subquery","How many distinct players appear in at least one of batting_stats, bowling_stats, or fielding_stats?",SELECT COUNT(*) FROM (SELECT player_id FROM batting_stats UNION SELECT player_id FROM bowling_stats UNION SELECT player_id FROM fielding_stats),"{""columns"": [""COUNT(*)""], ""rows"": [[41]]}",1,"SELECT COUNT(DISTINCT player_id) AS distinct_players
+FROM (
+    SELECT player_id FROM batting_stats
+    UNION
+    SELECT player_id FROM bowling_stats
+    UNION
+    SELECT player_id FROM fielding_stats
+)","{""columns"": [""distinct_players""], ""rows"": [[41]]}",1.0,True,match,,14.12,stop,3877,206,145,0.00386879
+Kimi K3,moonshotai/kimi-k3,46,medium,"join,filter,aggregate",How many catches were taken by substitute fielders?,SELECT COUNT(*) FROM delivery_fielders f JOIN deliveries d ON d.delivery_id = f.delivery_id WHERE f.is_substitute = 1 AND d.wicket_type = 'caught',"{""columns"": [""COUNT(*)""], ""rows"": [[13]]}",1,"SELECT COUNT(*) AS catches_by_substitutes
+FROM delivery_fielders df
+JOIN deliveries d ON df.delivery_id = d.delivery_id
+WHERE d.wicket_type = 'caught'
+  AND df.is_substitute = 1","{""columns"": [""catches_by_substitutes""], ""rows"": [[13]]}",1.0,True,match,,19.27,stop,3866,275,212,0.00482742
+Kimi K3,moonshotai/kimi-k3,47,medium,"join,group,null",How many runs off the bat were scored by players of each nationality? Players with unknown nationality form their own (NULL) group.,"SELECT p.nationality, SUM(d.runs_of_bat) FROM deliveries d JOIN players p ON p.player_id = d.striker_id GROUP BY p.nationality","{""columns"": [""nationality"", ""SUM(d.runs_of_bat)""], ""rows"": [[NaN, 41], [""Indian"", 17907], [""Overseas"", 8205]]}",3,"SELECT p.nationality, SUM(d.runs_of_bat) AS runs_off_bat
+FROM deliveries AS d
+JOIN players AS p ON p.player_id = d.striker_id
+GROUP BY p.nationality","{""columns"": [""nationality"", ""runs_off_bat""], ""rows"": [[NaN, 41], [""Indian"", 17907], [""Overseas"", 8205]]}",3.0,True,match,,29.48,stop,3882,417,357,0.00682614
+Kimi K3,moonshotai/kimi-k3,48,medium,"join,group,order",Which captain scored the most runs off the bat this season? Give the name and runs.,"SELECT p.player_name, SUM(d.runs_of_bat) AS r FROM deliveries d JOIN players p ON p.player_id = d.striker_id WHERE p.is_captain = 1 GROUP BY p.player_id ORDER BY r DESC LIMIT 1","{""columns"": [""player_name"", ""r""], ""rows"": [[""Shubman Gill"", 732]]}",1,"SELECT p.player_name, SUM(d.runs_of_bat) AS runs
+FROM deliveries AS d
+JOIN players AS p ON p.player_id = d.striker_id
+WHERE p.is_captain = 1
+GROUP BY p.player_id, p.player_name
+ORDER BY runs DESC
+LIMIT 1","{""columns"": [""player_name"", ""runs""], ""rows"": [[""Shubman Gill"", 732]]}",1.0,True,match,,27.29,stop,3874,411,333,0.00673678
+Kimi K3,moonshotai/kimi-k3,49,medium,"join,group,order",Which team hit the most sixes this season? Give the full team name and number of sixes.,"SELECT t.team_name, COUNT(*) AS n FROM deliveries d JOIN teams t ON t.team_code = d.batting_team WHERE d.runs_of_bat = 6 GROUP BY t.team_code ORDER BY n DESC LIMIT 1","{""columns"": [""team_name"", ""n""], ""rows"": [[""Rajasthan Royals"", 181]]}",1,"SELECT t.team_name, COUNT(*) AS sixes
+FROM deliveries d
+JOIN teams t ON t.team_code = d.batting_team
+WHERE d.runs_of_bat = 6
+GROUP BY d.batting_team, t.team_name
+ORDER BY sixes DESC
+LIMIT 1","{""columns"": [""team_name"", ""sixes""], ""rows"": [[""Rajasthan Royals"", 181]]}",1.0,True,match,,61.76,stop,3877,786,712,0.01198879
+Kimi K3,moonshotai/kimi-k3,50,medium,"multi-join,group,order","Using match_results, which city has the highest average first-innings score? Give the city and the average.","SELECT v.city, AVG(r.first_ings_score) AS a FROM match_results r JOIN matches m ON m.match_id = r.match_id JOIN venues v ON v.venue_id = m.venue_id WHERE r.first_ings_score IS NOT NULL GROUP BY v.city ORDER BY a DESC LIMIT 1","{""columns"": [""city"", ""a""], ""rows"": [[""Jaipur"", 228.0]]}",1,"SELECT v.city, AVG(mr.first_ings_score) AS avg_first_ings_score
+FROM match_results AS mr
+JOIN matches AS m ON m.match_id = mr.match_id
+JOIN venues AS v ON v.venue_id = m.venue_id
+GROUP BY v.city
+ORDER BY avg_first_ings_score DESC
+LIMIT 1","{""columns"": [""city"", ""avg_first_ings_score""], ""rows"": [[""Jaipur"", 228.0]]}",1.0,True,match,,15.69,stop,3878,391,306,0.00645946
+Kimi K3,moonshotai/kimi-k3,51,medium,"case,ratio","Among completed matches in match_results, what percentage were won by the toss winner?",SELECT 100.0 * SUM(CASE WHEN toss_winner = match_winner THEN 1 ELSE 0 END) / COUNT(*) FROM match_results WHERE match_result = 'completed',"{""columns"": [""100.0 * SUM(CASE WHEN toss_winner = match_winner THEN 1 ELSE 0 END) / COUNT(*)""], ""rows"": [[55.26315789473684]]}",1,"SELECT 100.0 * SUM(CASE WHEN match_winner = toss_winner THEN 1 ELSE 0 END) / COUNT(*) AS pct_won_by_toss_winner
+FROM match_results
+WHERE match_result = 'completed'","{""columns"": [""pct_won_by_toss_winner""], ""rows"": [[55.26315789473684]]}",1.0,True,match,,14.66,stop,3872,223,160,0.00410344
+Kimi K3,moonshotai/kimi-k3,52,medium,"filter,aggregate",In how many matches in match_results did the home team win?,SELECT COUNT(*) FROM match_results WHERE match_winner = home_team,"{""columns"": [""COUNT(*)""], ""rows"": [[21]]}",1,"SELECT COUNT(*) AS home_team_wins
+FROM match_results
+WHERE home_team = match_winner","{""columns"": [""home_team_wins""], ""rows"": [[21]]}",1.0,True,match,,1.93,stop,3869,108,73,0.00249143
+Kimi K3,moonshotai/kimi-k3,53,medium,"join,domain",How many 'caught and bowled' dismissals were there (the catch was taken by the bowler who bowled the ball)?,SELECT COUNT(*) FROM deliveries d JOIN delivery_fielders f ON f.delivery_id = d.delivery_id AND f.player_id = d.bowler_id WHERE d.wicket_type = 'caught',"{""columns"": [""COUNT(*)""], ""rows"": [[21]]}",1,"SELECT COUNT(*) AS caught_and_bowled
+FROM deliveries d
+JOIN delivery_fielders df ON d.delivery_id = df.delivery_id
+WHERE d.wicket_type = 'caught'
+  AND df.player_id = d.bowler_id","{""columns"": [""caught_and_bowled""], ""rows"": [[21]]}",1.0,True,match,,20.55,stop,3883,253,188,0.00453081
+Kimi K3,moonshotai/kimi-k3,54,medium,"join,filter,aggregate",In how many completed matches was the Player of the Match from the losing team?,SELECT COUNT(*) FROM match_results r JOIN players p ON p.player_id = r.player_of_the_match_id WHERE r.match_result = 'completed' AND p.team_code != r.match_winner,"{""columns"": [""COUNT(*)""], ""rows"": [[2]]}",1,"SELECT COUNT(*) AS completed_matches
+FROM match_results mr
+JOIN players p ON p.player_id = mr.player_of_the_match_id
+WHERE mr.match_result = 'completed'
+  AND p.team_code <> mr.match_winner","{""columns"": [""completed_matches""], ""rows"": [[2]]}",1.0,True,match,,28.41,stop,3872,266,206,0.00470544
+Kimi K3,moonshotai/kimi-k3,55,medium,"multi-join,many-to-many,aggregate",How many stumpings were effected by players whose role is Wicket Keeper?,SELECT COUNT(*) FROM delivery_fielders f JOIN deliveries d ON d.delivery_id = f.delivery_id JOIN players p ON p.player_id = f.player_id WHERE d.wicket_type = 'stumped' AND p.role = 'Wicket Keeper',"{""columns"": [""COUNT(*)""], ""rows"": [[2]]}",1,"SELECT COUNT(DISTINCT d.delivery_id) AS stumpings
+FROM deliveries d
+JOIN delivery_fielders df ON df.delivery_id = d.delivery_id
+JOIN players p ON p.player_id = df.player_id
+WHERE d.wicket_type = 'stumped'
+  AND p.role = 'Wicket Keeper'","{""columns"": [""stumpings""], ""rows"": [[2]]}",1.0,True,match,,33.15,stop,3871,504,424,0.00803677
+Kimi K3,moonshotai/kimi-k3,56,hard,"role-join,group,order,domain","Which overseas bowler took the most bowler-credited wickets of Indian batters? Wickets exclude run outs, retired hurt and obstructing the field. Give the bowler's name and count.","SELECT b.player_name, COUNT(*) AS n FROM deliveries d JOIN players b ON b.player_id = d.bowler_id JOIN players x ON x.player_id = d.player_dismissed_id WHERE b.nationality = 'Overseas' AND x.nationality = 'Indian' AND d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') GROUP BY b.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Kagiso Rabada"", 21]]}",1,"SELECT bp.player_name AS bowler_name, COUNT(*) AS wickets
+FROM deliveries d
+JOIN players bp ON bp.player_id = d.bowler_id
+JOIN players dp ON dp.player_id = d.player_dismissed_id
+WHERE bp.nationality = 'Overseas'
+  AND dp.nationality = 'Indian'
+  AND d.wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+GROUP BY d.bowler_id, bp.player_name
+ORDER BY wickets DESC, bowler_name
+LIMIT 1","{""columns"": [""bowler_name"", ""wickets""], ""rows"": [[""Kagiso Rabada"", 21]]}",1.0,True,match,,62.69,stop,3893,1135,1005,0.01688551
+Kimi K3,moonshotai/kimi-k3,57,hard,"role-join,aggregate,null,domain",How many bowler-credited wickets were taken by a bowler of the same nationality as the dismissed batter? Only count cases where both nationalities are known.,"SELECT COUNT(*) FROM deliveries d JOIN players b ON b.player_id = d.bowler_id JOIN players x ON x.player_id = d.player_dismissed_id WHERE d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') AND b.nationality = x.nationality","{""columns"": [""COUNT(*)""], ""rows"": [[427]]}",1,"SELECT COUNT(*) AS same_nationality_bowler_wickets
+FROM deliveries d
+JOIN players bowler ON bowler.player_id = d.bowler_id
+JOIN players dismissed ON dismissed.player_id = d.player_dismissed_id
+WHERE d.wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+  AND bowler.nationality IS NOT NULL
+  AND dismissed.nationality IS NOT NULL
+  AND bowler.nationality = dismissed.nationality","{""columns"": [""same_nationality_bowler_wickets""], ""rows"": [[427]]}",1.0,True,match,,29.52,stop,3886,514,397,0.00818682
+Kimi K3,moonshotai/kimi-k3,58,hard,"many-to-many,window,cte,tie",Which fielder(s) were involved in the most run outs (a run out can credit more than one fielder)? Return all tied players with their count.,"WITH c AS (SELECT f.player_id, COUNT(*) AS n, RANK() OVER (ORDER BY COUNT(*) DESC) AS rk FROM delivery_fielders f JOIN deliveries d ON d.delivery_id = f.delivery_id WHERE d.wicket_type = 'run out' GROUP BY f.player_id) SELECT p.player_name, c.n FROM c JOIN players p ON p.player_id = c.player_id WHERE c.rk = 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Ruturaj Gaikwad"", 3], [""Dhruv Jurel"", 3], [""Ishan Kishan"", 3], [""Eshan Malinga"", 3]]}",4,"WITH run_out_fielders AS (
+  SELECT df.player_id, COUNT(*) AS run_outs
+  FROM delivery_fielders df
+  JOIN deliveries d ON d.delivery_id = df.delivery_id
+  WHERE d.wicket_type = 'run out'
+  GROUP BY df.player_id
+), max_run_outs AS (
+  SELECT MAX(run_outs) AS max_run_outs
+  FROM run_out_fielders
+)
+SELECT p.player_name, r.run_outs
+FROM run_out_fielders r
+JOIN players p ON p.player_id = r.player_id
+JOIN max_run_outs m ON r.run_outs = m.max_run_outs
+ORDER BY p.player_name","{""columns"": [""player_name"", ""run_outs""], ""rows"": [[""Dhruv Jurel"", 3], [""Eshan Malinga"", 3], [""Ishan Kishan"", 3], [""Ruturaj Gaikwad"", 3]]}",4.0,True,match,,48.65,stop,3888,813,658,0.01237416
+Kimi K3,moonshotai/kimi-k3,59,hard,"semi-join,many-to-many",How many dismissals involved at least one fielder? Count each dismissal once even when two fielders were involved.,SELECT COUNT(*) FROM deliveries d WHERE d.player_dismissed_id IS NOT NULL AND EXISTS (SELECT 1 FROM delivery_fielders f WHERE f.delivery_id = d.delivery_id),"{""columns"": [""COUNT(*)""], ""rows"": [[686]]}",1,"SELECT COUNT(DISTINCT delivery_id) AS dismissals_with_fielder
+FROM delivery_fielders","{""columns"": [""dismissals_with_fielder""], ""rows"": [[686]]}",1.0,True,match,,6.13,stop,3879,136,102,0.00289013
+Kimi K3,moonshotai/kimi-k3,60,hard,"self-join,date",How many pairs of matches were played on the same date?,SELECT COUNT(*) FROM matches a JOIN matches b ON a.date = b.date AND a.match_id < b.match_id,"{""columns"": [""COUNT(*)""], ""rows"": [[12]]}",1,"SELECT COUNT(*) AS same_date_match_pairs
+FROM matches AS m1
+JOIN matches AS m2
+  ON m1.date = m2.date
+ AND m1.match_id < m2.match_id","{""columns"": [""same_date_match_pairs""], ""rows"": [[12]]}",1.0,True,match,,31.82,stop,3868,419,363,0.00684476
+Kimi K3,moonshotai/kimi-k3,61,hard,"self-join,domain","How many times did a bowler take bowler-credited wickets on two consecutive deliveries (delivery_id and delivery_id + 1, same match, innings and bowler)?","SELECT COUNT(*) FROM deliveries d JOIN deliveries n ON n.delivery_id = d.delivery_id + 1 AND n.match_id = d.match_id AND n.innings = d.innings AND n.bowler_id = d.bowler_id WHERE d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') AND n.player_dismissed_id IS NOT NULL AND n.wicket_type NOT IN ('run out','retired hurt','obstructing the field')","{""columns"": [""COUNT(*)""], ""rows"": [[26]]}",1,"SELECT COUNT(*) AS consecutive_bowler_wicket_pairs
+FROM deliveries AS d1
+JOIN deliveries AS d2
+  ON d2.delivery_id = d1.delivery_id + 1
+ AND d2.match_id = d1.match_id
+ AND d2.innings = d1.innings
+ AND d2.bowler_id = d1.bowler_id
+WHERE d1.player_dismissed_id IS NOT NULL
+  AND d2.player_dismissed_id IS NOT NULL
+  AND d1.wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+  AND d2.wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')","{""columns"": [""consecutive_bowler_wicket_pairs""], ""rows"": [[26]]}",1.0,True,match,,169.66,stop,3888,2528,2358,0.03638416
+Kimi K3,moonshotai/kimi-k3,62,hard,"multi-join,group,order",In which state were the most sixes hit this season? Give the state and number of sixes.,"SELECT v.state, COUNT(*) AS n FROM deliveries d JOIN matches m ON m.match_id = d.match_id JOIN venues v ON v.venue_id = m.venue_id WHERE d.runs_of_bat = 6 GROUP BY v.state ORDER BY n DESC LIMIT 1","{""columns"": [""state"", ""n""], ""rows"": [[""Maharashtra"", 176]]}",1,"SELECT v.state, COUNT(*) AS number_of_sixes
+FROM deliveries d
+JOIN matches m ON m.match_id = d.match_id
+JOIN venues v ON v.venue_id = m.venue_id
+WHERE d.runs_of_bat = 6
+GROUP BY v.state
+ORDER BY number_of_sixes DESC
+LIMIT 1","{""columns"": [""state"", ""number_of_sixes""], ""rows"": [[""Maharashtra"", 176]]}",1.0,True,match,,26.53,stop,3877,443,357,0.00718679
+Kimi K3,moonshotai/kimi-k3,63,hard,"multi-join,subquery,window,cte,tie","For the season's top run scorer (runs off the bat), in which city or cities did they score the most runs? Return all tied cities with the runs.","WITH c AS (SELECT v.city, SUM(d.runs_of_bat) AS r, RANK() OVER (ORDER BY SUM(d.runs_of_bat) DESC) AS rk FROM deliveries d JOIN matches m ON m.match_id = d.match_id JOIN venues v ON v.venue_id = m.venue_id WHERE d.striker_id = (SELECT striker_id FROM deliveries GROUP BY striker_id ORDER BY SUM(runs_of_bat) DESC LIMIT 1) GROUP BY v.city) SELECT city, r FROM c WHERE rk = 1","{""columns"": [""city"", ""r""], ""rows"": [[""Jaipur"", 236], [""Chandigarh"", 236]]}",2,,,,False,no_sql_in_reply,,34.88,error,3425,953,953,0.0
+Kimi K3,moonshotai/kimi-k3,64,hard,"multi-join,cte,case,domain","Compare the average team innings total (runs off the bat plus extras, regular innings) when a team bats at one of its own home venues versus anywhere else. Ignore matches marked abandoned in match_results. Return labels 'home' and 'away' with the averages.","WITH t AS (SELECT d.match_id, d.batting_team, SUM(d.runs_of_bat + d.extras) AS r FROM deliveries d WHERE d.innings <= 2 AND d.match_id NOT IN (SELECT match_id FROM match_results WHERE match_result = 'abandoned') GROUP BY d.match_id, d.batting_team) SELECT CASE WHEN v.home_team = t.batting_team THEN 'home' ELSE 'away' END AS side, AVG(t.r) FROM t JOIN matches m ON m.match_id = t.match_id JOIN venues v ON v.venue_id = m.venue_id GROUP BY side","{""columns"": [""side"", ""AVG(t.r)""], ""rows"": [[""away"", 187.78205128205127], [""home"", 187.0441176470588]]}",2,,,,False,no_sql_in_reply,,274.5,length,3909,4000,4003,0.05700623
+Kimi K3,moonshotai/kimi-k3,65,hard,"window,cte,multi-join","For each team (full name), who was its top run scorer this season (runs off the bat)? Give team name, player name and runs; include ties.","WITH r AS (SELECT d.batting_team, d.striker_id, SUM(d.runs_of_bat) AS runs, RANK() OVER (PARTITION BY d.batting_team ORDER BY SUM(d.runs_of_bat) DESC) AS rk FROM deliveries d GROUP BY d.batting_team, d.striker_id) SELECT t.team_name, p.player_name, r.runs FROM r JOIN teams t ON t.team_code = r.batting_team JOIN players p ON p.player_id = r.striker_id WHERE r.rk = 1","{""columns"": [""team_name"", ""player_name"", ""runs""], ""rows"": [[""Chennai Super Kings"", ""Sanju Samson"", 475], [""Delhi Capitals"", ""KL Rahul"", 593], [""Gujarat Titans"", ""Shubman Gill"", 732], [""Kolkata Knight Riders"", ""Angkrish Raghuvanshi"", 422], [""Lucknow Super Giants"", ""Mitchell Marsh"", 563], [""Mumbai Indians"", ""Ryan Rickelton"", 448], [""Punjab Kings"", ""Prabhsimran Singh"", 510], [""Royal Challengers Bengaluru"", ""Virat Kohli"", 675], [""Rajasthan Royals"", ""Vaibhav Sooryavanshi"", 776], [""Sunrisers Hyderabad"", ""Heinrich Klaasen"", 624]]}",10,,,,False,no_sql_in_reply,,33.82,error,3423,894,894,0.0
+Kimi K3,moonshotai/kimi-k3,66,hard,"window,cte,join,domain","Which venue has the highest average first-innings total (runs off the bat plus extras, computed from deliveries)? Ignore matches marked abandoned in match_results. Give the stadium and the average.","WITH t AS (SELECT d.match_id, SUM(d.runs_of_bat + d.extras) AS r FROM deliveries d WHERE d.innings = 1 AND d.match_id NOT IN (SELECT match_id FROM match_results WHERE match_result = 'abandoned') GROUP BY d.match_id) SELECT v.venue_stadium, AVG(t.r) AS a FROM t JOIN matches m ON m.match_id = t.match_id JOIN venues v ON v.venue_id = m.venue_id GROUP BY v.venue_id ORDER BY a DESC LIMIT 1","{""columns"": [""venue_stadium"", ""a""], ""rows"": [[""Sawai Mansingh Stadium"", 224.5]]}",1,"WITH first_innings AS (
+    SELECT match_id, SUM(runs_of_bat + extras) AS total
+    FROM deliveries
+    WHERE innings = 1
+    GROUP BY match_id
+), valid AS (
+    SELECT fi.match_id, fi.total
+    FROM first_innings fi
+    LEFT JOIN match_results mr ON mr.match_id = fi.match_id
+    WHERE mr.match_result IS NULL OR mr.match_result <> 'abandoned'
+)
+SELECT v.venue_stadium, AVG(vd.total) AS average_first_innings_total
+FROM valid vd
+JOIN matches m ON m.match_id = vd.match_id
+JOIN venues v ON v.venue_id = m.venue_id
+GROUP BY v.venue_id, v.venue_stadium
+ORDER BY average_first_innings_total DESC
+LIMIT 1","{""columns"": [""venue_stadium"", ""average_first_innings_total""], ""rows"": [[""Sawai Mansingh Stadium"", 224.5]]}",1.0,True,match,,36.35,stop,3893,857,675,0.01299351
+Kimi K3,moonshotai/kimi-k3,67,hard,"window,join,date","For KL Rahul, list each match date, his runs off the bat in that match, and his cumulative runs so far, in date order.","SELECT m.date, SUM(d.runs_of_bat) AS runs, SUM(SUM(d.runs_of_bat)) OVER (ORDER BY m.date, m.match_id) AS cumulative FROM deliveries d JOIN matches m ON m.match_id = d.match_id JOIN players p ON p.player_id = d.striker_id WHERE p.player_name = 'KL Rahul' GROUP BY m.match_id ORDER BY m.date, m.match_id","{""columns"": [""date"", ""runs"", ""cumulative""], ""rows"": [[""2026-04-01"", 0, 0], [""2026-04-04"", 1, 1], [""2026-04-08"", 92, 93], [""2026-04-11"", 18, 111], [""2026-04-18"", 57, 168], [""2026-04-21"", 37, 205], [""2026-04-25"", 152, 357], [""2026-04-27"", 1, 358], [""2026-05-01"", 75, 433], [""2026-05-05"", 12, 445], [""2026-05-08"", 23, 468], [""2026-05-11"", 9, 477], [""2026-05-17"", 56, 533], [""2026-05-24"", 60, 593]]}",14,"SELECT m.date AS match_date,
+       SUM(d.runs_of_bat) AS runs_off_bat,
+       SUM(SUM(d.runs_of_bat)) OVER (
+           ORDER BY m.date, m.match_id
+           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+       ) AS cumulative_runs
+FROM deliveries d
+JOIN matches m ON m.match_id = d.match_id
+JOIN players p ON p.player_id = d.striker_id
+WHERE p.player_name = 'KL Rahul'
+GROUP BY m.match_id, m.date
+ORDER BY m.date, m.match_id","{""columns"": [""match_date"", ""runs_off_bat"", ""cumulative_runs""], ""rows"": [[""2026-04-01"", 0, 0], [""2026-04-04"", 1, 1], [""2026-04-08"", 92, 93], [""2026-04-11"", 18, 111], [""2026-04-18"", 57, 168], [""2026-04-21"", 37, 205], [""2026-04-25"", 152, 357], [""2026-04-27"", 1, 358], [""2026-05-01"", 75, 433], [""2026-05-05"", 12, 445], [""2026-05-08"", 23, 468], [""2026-05-11"", 9, 477], [""2026-05-17"", 56, 533], [""2026-05-24"", 60, 593]]}",14.0,True,match,,94.98,stop,3886,1050,912,0.01569082
+Kimi K3,moonshotai/kimi-k3,68,hard,"multi-join,group,having,domain","List every century this season (100+ runs off the bat by one player in one match, regular innings): give the player name, the city, and the runs.","SELECT p.player_name, v.city, SUM(d.runs_of_bat) AS r FROM deliveries d JOIN players p ON p.player_id = d.striker_id JOIN matches m ON m.match_id = d.match_id JOIN venues v ON v.venue_id = m.venue_id WHERE d.innings <= 2 GROUP BY d.match_id, d.striker_id HAVING SUM(d.runs_of_bat) >= 100","{""columns"": [""player_name"", ""city"", ""r""], ""rows"": [[""Sanju Samson"", ""Chennai"", 115], [""Quinton de Kock"", ""Mumbai"", 112], [""Tilak Varma"", ""Ahmedabad"", 101], [""Abhishek Sharma"", ""Hyderabad"", 135], [""Sanju Samson"", ""Mumbai"", 101], [""Sai Sudharsan"", ""Bengaluru"", 100], [""KL Rahul"", ""New Delhi"", 152], [""Vaibhav Sooryavanshi"", ""Jaipur"", 103], [""Ryan Rickelton"", ""Mumbai"", 123], [""Cooper Connolly"", ""Hyderabad"", 107], [""Mitchell Marsh"", ""Lucknow"", 111], [""Finn Allen"", ""New Delhi"", 100], [""Virat Kohli"", ""Raipur"", 105], [""Shreyas Iyer"", ""Lucknow"", 101], [""Shubman Gill"", ""Chandigarh"", 104]]}",15,"SELECT p.player_name, v.city, SUM(d.runs_of_bat) AS runs
+FROM deliveries d
+JOIN matches m ON d.match_id = m.match_id
+JOIN venues v ON m.venue_id = v.venue_id
+JOIN players p ON d.striker_id = p.player_id
+WHERE d.innings IN (1, 2)
+GROUP BY d.match_id, d.striker_id
+HAVING SUM(d.runs_of_bat) >= 100
+ORDER BY runs DESC","{""columns"": [""player_name"", ""city"", ""runs""], ""rows"": [[""KL Rahul"", ""New Delhi"", 152], [""Abhishek Sharma"", ""Hyderabad"", 135], [""Ryan Rickelton"", ""Mumbai"", 123], [""Sanju Samson"", ""Chennai"", 115], [""Quinton de Kock"", ""Mumbai"", 112], [""Mitchell Marsh"", ""Lucknow"", 111], [""Cooper Connolly"", ""Hyderabad"", 107], [""Virat Kohli"", ""Raipur"", 105], [""Shubman Gill"", ""Chandigarh"", 104], [""Vaibhav Sooryavanshi"", ""Jaipur"", 103], [""Tilak Varma"", ""Ahmedabad"", 101], [""Sanju Samson"", ""Mumbai"", 101], [""Shreyas Iyer"", ""Lucknow"", 101], [""Sai Sudharsan"", ""Bengaluru"", 100], [""Finn Allen"", ""New Delhi"", 100]]}",15.0,True,match,,65.55,stop,3890,475,358,0.0076435
+Kimi K3,moonshotai/kimi-k3,69,hard,"cte,multi-join,domain",How many centuries (100+ runs off the bat in a match) were scored in a losing cause? Only matches with a completed result in match_results can be judged.,"WITH c AS (SELECT d.match_id, d.batting_team FROM deliveries d WHERE d.innings <= 2 GROUP BY d.match_id, d.striker_id HAVING SUM(d.runs_of_bat) >= 100) SELECT COUNT(*) FROM c JOIN match_results r ON r.match_id = c.match_id WHERE r.match_result = 'completed' AND r.match_winner != c.batting_team","{""columns"": [""COUNT(*)""], ""rows"": [[4]]}",1,,,,False,no_sql_in_reply,,295.83,length,3890,4000,4002,0.0569935
+Kimi K3,moonshotai/kimi-k3,70,hard,"join,ratio,having,domain","Among bowlers with at least 120 legal deliveries (regular innings), who has the best economy rate (runs conceded per 6 legal balls; byes and leg-byes are not charged)? Give the name and economy.","SELECT p.player_name, 6.0 * SUM(d.runs_of_bat + CASE WHEN d.wide = 1 OR d.noballs = 1 THEN d.extras ELSE 0 END) / SUM(CASE WHEN d.wide = 0 AND d.noballs = 0 THEN 1 ELSE 0 END) AS econ FROM deliveries d JOIN players p ON p.player_id = d.bowler_id WHERE d.innings <= 2 GROUP BY p.player_id HAVING SUM(CASE WHEN d.wide = 0 AND d.noballs = 0 THEN 1 ELSE 0 END) >= 120 ORDER BY econ ASC LIMIT 1","{""columns"": [""player_name"", ""econ""], ""rows"": [[""Sunil Narine"", 6.647058823529412]]}",1,,,,False,no_sql_in_reply,,282.38,length,3901,4000,4002,0.05700087
+Kimi K3,moonshotai/kimi-k3,71,hard,"join,ratio,having,domain","Among batters who faced at least 200 balls (wides are not balls faced; regular innings), who has the highest strike rate (runs off the bat per 100 balls)? Give the name and strike rate.","SELECT p.player_name, 100.0 * SUM(d.runs_of_bat) / SUM(CASE WHEN d.wide = 0 THEN 1 ELSE 0 END) AS sr FROM deliveries d JOIN players p ON p.player_id = d.striker_id WHERE d.innings <= 2 GROUP BY p.player_id HAVING SUM(CASE WHEN d.wide = 0 THEN 1 ELSE 0 END) >= 200 ORDER BY sr DESC LIMIT 1","{""columns"": [""player_name"", ""sr""], ""rows"": [[""Vaibhav Sooryavanshi"", 237.30886850152905]]}",1,"SELECT p.player_name,
+       (SUM(d.runs_of_bat) * 100.0) / COUNT(*) AS strike_rate
+FROM deliveries AS d
+JOIN players AS p
+  ON p.player_id = d.striker_id
+WHERE d.innings IN (1, 2)
+  AND d.wide = 0
+GROUP BY d.striker_id
+HAVING COUNT(*) >= 200
+ORDER BY strike_rate DESC
+LIMIT 1","{""columns"": [""player_name"", ""strike_rate""], ""rows"": [[""Vaibhav Sooryavanshi"", 237.30886850152905]]}",1.0,True,match,,27.19,stop,3900,731,623,0.0112342
+Kimi K3,moonshotai/kimi-k3,72,hard,"join,group,order,domain","Which bowler took the most bowler-credited wickets this season (excluding run outs, retired hurt, obstructing the field)? Give the name and wickets.","SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.bowler_id WHERE d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Kagiso Rabada"", 29]]}",1,"SELECT p.player_name, COUNT(*) AS wickets
+FROM deliveries d
+JOIN players p ON p.player_id = d.bowler_id
+WHERE d.player_dismissed_id IS NOT NULL
+  AND d.wicket_type NOT IN ('run out', 'retired hurt', 'obstructing the field')
+GROUP BY d.bowler_id, p.player_name
+ORDER BY wickets DESC
+LIMIT 1","{""columns"": [""player_name"", ""wickets""], ""rows"": [[""Kagiso Rabada"", 29]]}",1.0,True,match,,19.2,stop,3886,593,497,0.00929282
+Kimi K3,moonshotai/kimi-k3,73,hard,"join,group,order,domain","Which bowler took the most bowler-credited wickets in the powerplay (overs 0-5, regular innings)? Give the name and wickets.","SELECT p.player_name, COUNT(*) AS n FROM deliveries d JOIN players p ON p.player_id = d.bowler_id WHERE d.innings <= 2 AND d.over_no < 6 AND d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') GROUP BY p.player_id ORDER BY n DESC LIMIT 1","{""columns"": [""player_name"", ""n""], ""rows"": [[""Kagiso Rabada"", 20]]}",1,"SELECT p.player_name, COUNT(*) AS wickets
+FROM deliveries d
+JOIN players p ON p.player_id = d.bowler_id
+WHERE d.innings IN (1, 2)
+  AND d.over_no BETWEEN 0 AND 5
+  AND d.wicket_type IN ('bowled', 'caught', 'lbw', 'stumped', 'hit wicket')
+GROUP BY d.bowler_id
+ORDER BY wickets DESC
+LIMIT 1","{""columns"": [""player_name"", ""wickets""], ""rows"": [[""Kagiso Rabada"", 20]]}",1.0,True,match,,17.87,stop,3885,446,339,0.00723415
+Kimi K3,moonshotai/kimi-k3,74,hard,"join,ratio,group,order,domain","Which bowling team had the best (lowest) economy in the death overs (overs 15-19, regular innings)? Economy = runs conceded per 6 legal balls (byes and leg-byes not charged). Give the full team name and economy.","SELECT t.team_name, 6.0 * SUM(d.runs_of_bat + CASE WHEN d.wide = 1 OR d.noballs = 1 THEN d.extras ELSE 0 END) / SUM(CASE WHEN d.wide = 0 AND d.noballs = 0 THEN 1 ELSE 0 END) AS econ FROM deliveries d JOIN teams t ON t.team_code = d.bowling_team WHERE d.innings <= 2 AND d.over_no >= 15 GROUP BY t.team_code ORDER BY econ ASC LIMIT 1","{""columns"": [""team_name"", ""econ""], ""rows"": [[""Sunrisers Hyderabad"", 9.819628647214854]]}",1,,,,False,no_sql_in_reply,,218.12,length,3908,4000,4000,0.05700556
+Kimi K3,moonshotai/kimi-k3,75,hard,"window,join,group","Rank all teams by total sixes hit this season with dense ranking (most sixes = rank 1). Give the full team name, sixes and rank.","SELECT t.team_name, COUNT(*) AS sixes, DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS rk FROM deliveries d JOIN teams t ON t.team_code = d.batting_team WHERE d.runs_of_bat = 6 GROUP BY t.team_code","{""columns"": [""team_name"", ""sixes"", ""rk""], ""rows"": [[""Rajasthan Royals"", 181, 1], [""Sunrisers Hyderabad"", 171, 2], [""Royal Challengers Bengaluru"", 164, 3], [""Punjab Kings"", 163, 4], [""Mumbai Indians"", 140, 5], [""Lucknow Super Giants"", 127, 6], [""Gujarat Titans"", 124, 7], [""Chennai Super Kings"", 124, 7], [""Delhi Capitals"", 117, 8], [""Kolkata Knight Riders"", 115, 9]]}",10,"SELECT t.team_name,
+       COUNT(d.delivery_id) AS sixes,
+       DENSE_RANK() OVER (ORDER BY COUNT(d.delivery_id) DESC) AS rank
+FROM teams t
+LEFT JOIN deliveries d
+       ON d.batting_team = t.team_code
+      AND d.runs_of_bat = 6
+GROUP BY t.team_code
+ORDER BY sixes DESC, t.team_name","{""columns"": [""team_name"", ""sixes"", ""rank""], ""rows"": [[""Rajasthan Royals"", 181, 1], [""Sunrisers Hyderabad"", 171, 2], [""Royal Challengers Bengaluru"", 164, 3], [""Punjab Kings"", 163, 4], [""Mumbai Indians"", 140, 5], [""Lucknow Super Giants"", 127, 6], [""Chennai Super Kings"", 124, 7], [""Gujarat Titans"", 124, 7], [""Delhi Capitals"", 117, 8], [""Kolkata Knight Riders"", 115, 9]]}",10.0,True,match,,25.58,stop,3889,469,371,0.00755883
+Kimi K3,moonshotai/kimi-k3,76,hard,"cross-join,left-join,group","For every combination of team (team code) and stage ('League stage', 'Playoffs', 'Final'), how many matches did the team play in that stage? Include combinations with zero matches.","SELECT t.team_code, s.stage, COUNT(m.match_id) FROM teams t CROSS JOIN (SELECT DISTINCT stage FROM matches) s LEFT JOIN matches m ON m.stage = s.stage AND t.team_code IN (m.bat_first_team, m.bowl_first_team) GROUP BY t.team_code, s.stage","{""columns"": [""team_code"", ""stage"", ""COUNT(m.match_id)""], ""rows"": [[""CSK"", ""Final"", 0], [""CSK"", ""League stage"", 14], [""CSK"", ""Playoffs"", 0], [""DC"", ""Final"", 0], [""DC"", ""League stage"", 14], [""DC"", ""Playoffs"", 0], [""GT"", ""Final"", 1], [""GT"", ""League stage"", 14], [""GT"", ""Playoffs"", 2], [""KKR"", ""Final"", 0], [""KKR"", ""League stage"", 14], [""KKR"", ""Playoffs"", 0], [""LSG"", ""Final"", 0], [""LSG"", ""League stage"", 14], [""LSG"", ""Playoffs"", 0], [""MI"", ""Final"", 0], [""MI"", ""League stage"", 14], [""MI"", ""Playoffs"", 0], [""PBKS"", ""Final"", 0], [""PBKS"", ""League stage"", 14], [""PBKS"", ""Playoffs"", 0], [""RCB"", ""Final"", 1], [""RCB"", ""League stage"", 14], [""RCB"", ""Playoffs"", 1], [""RR"", ""Final"", 0], [""RR"", ""League stage"", 14], [""RR"", ""Playoffs"", 2], [""SRH"", ""Final"", 0], [""SRH"", ""League stage"", 14], [""SRH"", ""Playoffs"", 1]]}",30,"SELECT t.team_code,
+       s.stage,
+       COUNT(m.match_id) AS matches_played
+FROM teams t
+CROSS JOIN (
+    SELECT 'League stage' AS stage
+    UNION ALL SELECT 'Playoffs'
+    UNION ALL SELECT 'Final'
+) s
+LEFT JOIN matches m
+    ON m.stage = s.stage
+   AND (m.bat_first_team = t.team_code OR m.bowl_first_team = t.team_code)
+GROUP BY t.team_code, s.stage
+ORDER BY t.team_code, s.stage","{""columns"": [""team_code"", ""stage"", ""matches_played""], ""rows"": [[""CSK"", ""Final"", 0], [""CSK"", ""League stage"", 14], [""CSK"", ""Playoffs"", 0], [""DC"", ""Final"", 0], [""DC"", ""League stage"", 14], [""DC"", ""Playoffs"", 0], [""GT"", ""Final"", 1], [""GT"", ""League stage"", 14], [""GT"", ""Playoffs"", 2], [""KKR"", ""Final"", 0], [""KKR"", ""League stage"", 14], [""KKR"", ""Playoffs"", 0], [""LSG"", ""Final"", 0], [""LSG"", ""League stage"", 14], [""LSG"", ""Playoffs"", 0], [""MI"", ""Final"", 0], [""MI"", ""League stage"", 14], [""MI"", ""Playoffs"", 0], [""PBKS"", ""Final"", 0], [""PBKS"", ""League stage"", 14], [""PBKS"", ""Playoffs"", 0], [""RCB"", ""Final"", 1], [""RCB"", ""League stage"", 14], [""RCB"", ""Playoffs"", 1], [""RR"", ""Final"", 0], [""RR"", ""League stage"", 14], [""RR"", ""Playoffs"", 2], [""SRH"", ""Final"", 0], [""SRH"", ""League stage"", 14], [""SRH"", ""Playoffs"", 1]]}",30.0,True,match,,6.01,stop,3896,308,185,0.00530952
+Kimi K3,moonshotai/kimi-k3,77,hard,"full-join,null,aggregate",How many players appear in exactly one of batting_stats and bowling_stats (in one but not the other)?,SELECT COUNT(*) FROM batting_stats b FULL OUTER JOIN bowling_stats s ON s.player_id = b.player_id WHERE b.player_id IS NULL OR s.player_id IS NULL,"{""columns"": [""COUNT(*)""], ""rows"": [[30]]}",1,"WITH combined AS (
+    SELECT player_id FROM batting_stats
+    UNION ALL
+    SELECT player_id FROM bowling_stats
+)
+SELECT COUNT(*) AS player_count
+FROM (
+    SELECT player_id
+    FROM combined
+    GROUP BY player_id
+    HAVING COUNT(*) = 1
+) AS exactly_one","{""columns"": [""player_count""], ""rows"": [[30]]}",1.0,True,match,,34.22,stop,3877,408,331,0.00669679
+Kimi K3,moonshotai/kimi-k3,78,hard,"semi-join,subquery,domain","Which teams (full names) had at least one player score a century (100+ runs off the bat in one match, regular innings)?","SELECT t.team_name FROM teams t WHERE EXISTS (SELECT 1 FROM deliveries d WHERE d.batting_team = t.team_code AND d.innings <= 2 GROUP BY d.match_id, d.striker_id HAVING SUM(d.runs_of_bat) >= 100)","{""columns"": [""team_name""], ""rows"": [[""Mumbai Indians""], [""Chennai Super Kings""], [""Kolkata Knight Riders""], [""Royal Challengers Bengaluru""], [""Gujarat Titans""], [""Rajasthan Royals""], [""Sunrisers Hyderabad""], [""Punjab Kings""], [""Delhi Capitals""], [""Lucknow Super Giants""]]}",10,"WITH centuries AS (
+  SELECT match_id, innings, striker_id, batting_team
+  FROM deliveries
+  WHERE innings IN (1, 2)
+  GROUP BY match_id, innings, striker_id, batting_team
+  HAVING SUM(runs_of_bat) >= 100
+)
+SELECT DISTINCT t.team_name
+FROM centuries c
+JOIN teams t ON t.team_code = c.batting_team","{""columns"": [""team_name""], ""rows"": [[""Chennai Super Kings""], [""Mumbai Indians""], [""Sunrisers Hyderabad""], [""Gujarat Titans""], [""Delhi Capitals""], [""Rajasthan Royals""], [""Punjab Kings""], [""Lucknow Super Giants""], [""Kolkata Knight Riders""], [""Royal Challengers Bengaluru""]]}",10.0,True,match,,67.17,stop,3884,1158,1061,0.01720148
+Kimi K3,moonshotai/kimi-k3,79,hard,"anti-join,semi-join,domain",How many players whose role is 'Bowler' bowled at least one delivery but never took a bowler-credited wicket?,"SELECT COUNT(*) FROM players p WHERE p.role = 'Bowler' AND EXISTS (SELECT 1 FROM deliveries d WHERE d.bowler_id = p.player_id) AND NOT EXISTS (SELECT 1 FROM deliveries d WHERE d.bowler_id = p.player_id AND d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field'))","{""columns"": [""COUNT(*)""], ""rows"": [[11]]}",1,"SELECT COUNT(*) AS player_count
+FROM players p
+WHERE p.role = 'Bowler'
+  AND EXISTS (
+      SELECT 1
+      FROM deliveries d
+      WHERE d.bowler_id = p.player_id
+  )
+  AND NOT EXISTS (
+      SELECT 1
+      FROM deliveries d
+      WHERE d.bowler_id = p.player_id
+        AND d.player_dismissed_id IS NOT NULL
+        AND d.wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+  )","{""columns"": [""player_count""], ""rows"": [[11]]}",1.0,True,match,,55.17,stop,3881,1077,950,0.01606547
+Kimi K3,moonshotai/kimi-k3,80,hard,"anti-join,multi-join,null","Which venues with a known home team never saw that home team win there, according to match_results? Give the stadium names.",SELECT v.venue_stadium FROM venues v WHERE v.home_team IS NOT NULL AND NOT EXISTS (SELECT 1 FROM matches m JOIN match_results r ON r.match_id = m.match_id WHERE m.venue_id = v.venue_id AND r.match_winner = v.home_team),"{""columns"": [""venue_stadium""], ""rows"": [[""Sawai Mansingh Stadium""], [""HPCA Stadium""]]}",2,"SELECT v.venue_stadium
+FROM venues v
+WHERE v.home_team IS NOT NULL
+  AND NOT EXISTS (
+      SELECT 1
+      FROM matches m
+      JOIN match_results mr ON mr.match_id = m.match_id
+      WHERE m.venue_id = v.venue_id
+        AND mr.match_winner = v.home_team
+  )","{""columns"": [""venue_stadium""], ""rows"": [[""Sawai Mansingh Stadium""], [""HPCA Stadium""]]}",2.0,True,match,,148.14,stop,3881,3777,3690,0.05386547
+Kimi K3,moonshotai/kimi-k3,81,hard,"left-join,subquery,join","For which teams (team code) does the number of wins in the points table differ from the number of wins recorded in match_results? Give the team code, points-table wins and match_results wins.","SELECT pt.team_code, pt.wins, COUNT(r.match_id) AS result_wins FROM points_table pt LEFT JOIN match_results r ON r.match_winner = pt.team_code GROUP BY pt.team_code HAVING pt.wins != COUNT(r.match_id)","{""columns"": [""team_code"", ""wins"", ""result_wins""], ""rows"": [[""LSG"", 2, 3], [""RR"", 5, 4]]}",2,"WITH mr_wins AS (
+    SELECT match_winner AS team_code, COUNT(*) AS match_results_wins
+    FROM match_results
+    WHERE match_winner IS NOT NULL
+    GROUP BY match_winner
+)
+SELECT
+    pt.team_code,
+    pt.wins AS points_table_wins,
+    COALESCE(mr.match_results_wins, 0) AS match_results_wins
+FROM points_table pt
+LEFT JOIN mr_wins mr
+    ON mr.team_code = pt.team_code
+WHERE pt.wins <> COALESCE(mr.match_results_wins, 0)","{""columns"": [""team_code"", ""points_table_wins"", ""match_results_wins""], ""rows"": [[""RR"", 5, 4], [""LSG"", 2, 3]]}",2.0,True,match,,48.47,stop,3896,479,345,0.00770352
+Kimi K3,moonshotai/kimi-k3,82,hard,"join,cte,domain",In how many matches does match_results.highscore differ from the runs off the bat that the listed top scorer actually made in that match according to deliveries?,"WITH s AS (SELECT match_id, striker_id, SUM(runs_of_bat) AS r FROM deliveries WHERE innings <= 2 GROUP BY match_id, striker_id) SELECT COUNT(*) FROM match_results mr JOIN s ON s.match_id = mr.match_id AND s.striker_id = mr.top_scorer_id WHERE mr.highscore != s.r","{""columns"": [""COUNT(*)""], ""rows"": [[1]]}",1,,,,False,no_sql_in_reply,,113.84,length,3886,4000,4002,0.05699082
+Kimi K3,moonshotai/kimi-k3,83,hard,"multi-join,group,order,domain","What was the most expensive single over of the season (total runs in one over of one innings, regular innings)? Give the bowler's name, the city it was bowled in, and the runs.","SELECT p.player_name, v.city, SUM(d.runs_of_bat + d.extras) AS r FROM deliveries d JOIN players p ON p.player_id = d.bowler_id JOIN matches m ON m.match_id = d.match_id JOIN venues v ON v.venue_id = m.venue_id WHERE d.innings <= 2 GROUP BY d.match_id, d.innings, d.over_no, d.bowler_id ORDER BY r DESC LIMIT 1","{""columns"": [""player_name"", ""city"", ""r""], ""rows"": [[""Aiden Markram"", ""Chandigarh"", 32]]}",1,"SELECT p.player_name AS bowler_name,
+       v.city,
+       SUM(d.runs_of_bat + d.extras) AS runs
+FROM deliveries d
+JOIN matches m ON m.match_id = d.match_id
+JOIN venues v ON v.venue_id = m.venue_id
+JOIN players p ON p.player_id = d.bowler_id
+WHERE d.innings IN (1, 2)
+GROUP BY d.match_id, d.innings, d.over_no, d.bowler_id
+ORDER BY runs DESC
+LIMIT 1","{""columns"": [""bowler_name"", ""city"", ""runs""], ""rows"": [[""Aiden Markram"", ""Chandigarh"", 32]]}",1.0,True,match,,56.57,stop,3897,1638,1514,0.02393019
+Kimi K3,moonshotai/kimi-k3,84,hard,"role-join,group,having,subquery",How many distinct bowler-batter pairs are there where the bowler dismissed that batter two or more times (bowler-credited wickets only)?,"SELECT COUNT(*) FROM (SELECT d.bowler_id, d.player_dismissed_id FROM deliveries d WHERE d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') GROUP BY d.bowler_id, d.player_dismissed_id HAVING COUNT(*) >= 2)","{""columns"": [""COUNT(*)""], ""rows"": [[31]]}",1,"SELECT COUNT(*) AS pair_count
+FROM (
+  SELECT bowler_id, player_dismissed_id
+  FROM deliveries
+  WHERE player_dismissed_id IS NOT NULL
+    AND wicket_type IN ('bowled', 'caught', 'lbw', 'stumped', 'hit wicket')
+  GROUP BY bowler_id, player_dismissed_id
+  HAVING COUNT(*) >= 2
+) AS pairs","{""columns"": [""pair_count""], ""rows"": [[31]]}",1.0,True,match,,9.35,stop,3883,445,346,0.00721881
+Kimi K3,moonshotai/kimi-k3,85,hard,"set-op,join,cte,window,tie","Which team(s) used the most different players this season (anyone who batted, bowled or fielded for it)? Return all tied teams (full names) with the number of players.","WITH used AS (SELECT batting_team AS team, striker_id AS pid FROM deliveries UNION SELECT bowling_team, bowler_id FROM deliveries UNION SELECT d.bowling_team, f.player_id FROM delivery_fielders f JOIN deliveries d ON d.delivery_id = f.delivery_id), c AS (SELECT team, COUNT(*) AS n, RANK() OVER (ORDER BY COUNT(*) DESC) AS rk FROM used GROUP BY team) SELECT t.team_name, c.n FROM c JOIN teams t ON t.team_code = c.team WHERE c.rk = 1","{""columns"": [""team_name"", ""n""], ""rows"": [[""Mumbai Indians"", 23], [""Lucknow Super Giants"", 23]]}",2,,,,False,no_sql_in_reply,,83.35,length,3896,4000,4003,0.05699752
+Kimi K3,moonshotai/kimi-k3,86,brutal,"window,cte,join,date,domain","Which team had the biggest increase in its innings total (runs off the bat plus extras, regular innings) from one match to its next match in date order? Ignore matches marked abandoned in match_results. Give the full team name and the increase.","WITH t AS (SELECT d.match_id, d.batting_team, SUM(d.runs_of_bat + d.extras) AS r FROM deliveries d WHERE d.innings <= 2 AND d.match_id NOT IN (SELECT match_id FROM match_results WHERE match_result = 'abandoned') GROUP BY d.match_id, d.batting_team), g AS (SELECT t.batting_team, t.r - LAG(t.r) OVER (PARTITION BY t.batting_team ORDER BY m.date, m.match_id) AS diff FROM t JOIN matches m ON m.match_id = t.match_id) SELECT tm.team_name, g.diff FROM g JOIN teams tm ON tm.team_code = g.batting_team ORDER BY g.diff DESC LIMIT 1","{""columns"": [""team_name"", ""diff""], ""rows"": [[""Delhi Capitals"", 150]]}",1,"WITH team_innings AS (
+    SELECT
+        m.match_id,
+        m.date,
+        d.batting_team AS team_code,
+        SUM(d.runs_of_bat + d.extras) AS innings_total
+    FROM matches m
+    JOIN deliveries d
+        ON d.match_id = m.match_id
+    LEFT JOIN match_results mr
+        ON mr.match_id = m.match_id
+    WHERE d.innings IN (1, 2)
+      AND (mr.match_result IS NULL OR mr.match_result <> 'abandoned')
+    GROUP BY m.match_id, m.date, d.batting_team
+),
+increases AS (
+    SELECT
+        team_code,
+        innings_total - LAG(innings_total) OVER (
+            PARTITION BY team_code
+            ORDER BY date, match_id
+        ) AS increase
+    FROM team_innings
+)
+SELECT
+    t.team_name,
+    i.increase
+FROM increases i
+JOIN teams t
+    ON t.team_code = i.team_code
+WHERE i.increase IS NOT NULL
+ORDER BY i.increase DESC
+LIMIT 1","{""columns"": [""team_name"", ""increase""], ""rows"": [[""Delhi Capitals"", 150]]}",1.0,True,match,,76.45,stop,3905,3601,3360,0.05141755
+Kimi K3,moonshotai/kimi-k3,87,brutal,"window,cte,null","What is the median first-innings score in match_results (ignore matches without a score)? With an even count, the median is the average of the two middle values.","WITH s AS (SELECT first_ings_score AS x, ROW_NUMBER() OVER (ORDER BY first_ings_score) AS rn, COUNT(*) OVER () AS n FROM match_results WHERE first_ings_score IS NOT NULL) SELECT AVG(x) FROM s WHERE rn IN ((n + 1) / 2, (n + 2) / 2)","{""columns"": [""AVG(x)""], ""rows"": [[197.0]]}",1,"WITH ordered AS (
+  SELECT
+    first_ings_score,
+    ROW_NUMBER() OVER (ORDER BY first_ings_score) AS rn,
+    COUNT(*) OVER () AS n
+  FROM match_results
+  WHERE first_ings_score IS NOT NULL
+)
+SELECT AVG(first_ings_score) AS median_first_ings_score
+FROM ordered
+WHERE rn IN ((n + 1) / 2, (n + 2) / 2)","{""columns"": [""median_first_ings_score""], ""rows"": [[197.0]]}",1.0,True,match,,10.45,stop,3890,550,443,0.0086935
+Kimi K3,moonshotai/kimi-k3,88,brutal,"cte,left-join,null,domain","How many ducks were there this season? A duck is a player dismissed in a match (regular innings, excluding 'retired hurt') who scored zero runs off the bat in that match, including players dismissed without facing a ball.","WITH dis AS (SELECT DISTINCT match_id, player_dismissed_id AS pid FROM deliveries WHERE player_dismissed_id IS NOT NULL AND wicket_type != 'retired hurt' AND innings <= 2), runs AS (SELECT match_id, striker_id AS pid, SUM(runs_of_bat) AS r FROM deliveries WHERE innings <= 2 GROUP BY match_id, striker_id) SELECT COUNT(*) FROM dis LEFT JOIN runs ON runs.match_id = dis.match_id AND runs.pid = dis.pid WHERE COALESCE(runs.r, 0) = 0","{""columns"": [""COUNT(*)""], ""rows"": [[82]]}",1,"WITH dismissed AS (
+    SELECT match_id, player_dismissed_id AS player_id
+    FROM deliveries
+    WHERE innings IN (1, 2)
+      AND player_dismissed_id IS NOT NULL
+      AND wicket_type <> 'retired hurt'
+),
+runs AS (
+    SELECT match_id, striker_id AS player_id, SUM(runs_of_bat) AS runs_off_bat
+    FROM deliveries
+    WHERE innings IN (1, 2)
+    GROUP BY match_id, striker_id
+)
+SELECT COUNT(*) AS ducks
+FROM dismissed d
+LEFT JOIN runs r
+  ON r.match_id = d.match_id
+ AND r.player_id = d.player_id
+WHERE COALESCE(r.runs_off_bat, 0) = 0","{""columns"": [""ducks""], ""rows"": [[82]]}",1.0,True,match,,72.91,stop,3902,3690,3520,0.05266154
+Kimi K3,moonshotai/kimi-k3,89,brutal,"cte,anti-join,join,domain","What is the highest score by a batter who was NOT dismissed in that match (a not-out innings, regular innings only)? Give the name and runs.","WITH s AS (SELECT match_id, striker_id, SUM(runs_of_bat) AS r FROM deliveries WHERE innings <= 2 GROUP BY match_id, striker_id) SELECT p.player_name, s.r FROM s JOIN players p ON p.player_id = s.striker_id WHERE NOT EXISTS (SELECT 1 FROM deliveries d WHERE d.match_id = s.match_id AND d.player_dismissed_id = s.striker_id AND d.innings <= 2) ORDER BY s.r DESC LIMIT 1","{""columns"": [""player_name"", ""r""], ""rows"": [[""KL Rahul"", 152]]}",1,,,,False,no_sql_in_reply,,78.93,length,3887,4000,4004,0.05699149
+Kimi K3,moonshotai/kimi-k3,90,brutal,"cte,join,having,domain","Which bowler bowled the most maiden overs? A maiden is an over (same match, innings, over number and bowler; regular innings) with exactly 6 legal deliveries and zero runs conceded (byes and leg-byes are not charged). Give the name and count.","WITH o AS (SELECT d.bowler_id, SUM(d.runs_of_bat + CASE WHEN d.wide = 1 OR d.noballs = 1 THEN d.extras ELSE 0 END) AS conceded, SUM(CASE WHEN d.wide = 0 AND d.noballs = 0 THEN 1 ELSE 0 END) AS legal FROM deliveries d WHERE d.innings <= 2 GROUP BY d.match_id, d.innings, d.over_no, d.bowler_id) SELECT p.player_name, COUNT(*) AS maidens FROM o JOIN players p ON p.player_id = o.bowler_id WHERE o.conceded = 0 AND o.legal = 6 GROUP BY p.player_id ORDER BY maidens DESC LIMIT 1","{""columns"": [""player_name"", ""maidens""], ""rows"": [[""Mohsin Khan"", 3]]}",1,,,,False,no_sql_in_reply,,78.45,length,3911,4000,4000,0.05700757
+Kimi K3,moonshotai/kimi-k3,91,brutal,"cte,role-join,domain",How many times did a player score at least 30 runs off the bat AND take at least 2 bowler-credited wickets in the same match (regular innings)?,"WITH bat AS (SELECT match_id, striker_id AS pid, SUM(runs_of_bat) AS r FROM deliveries WHERE innings <= 2 GROUP BY match_id, striker_id), bowl AS (SELECT d.match_id, d.bowler_id AS pid, COUNT(*) AS w FROM deliveries d WHERE d.innings <= 2 AND d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') GROUP BY d.match_id, d.bowler_id) SELECT COUNT(*) FROM bat JOIN bowl ON bowl.match_id = bat.match_id AND bowl.pid = bat.pid WHERE bat.r >= 30 AND bowl.w >= 2","{""columns"": [""COUNT(*)""], ""rows"": [[6]]}",1,"WITH bat AS (
+    SELECT match_id, striker_id AS player_id
+    FROM deliveries
+    WHERE innings IN (1, 2)
+    GROUP BY match_id, striker_id
+    HAVING SUM(runs_of_bat) >= 30
+),
+bowl AS (
+    SELECT match_id, bowler_id AS player_id
+    FROM deliveries
+    WHERE innings IN (1, 2)
+      AND player_dismissed_id IS NOT NULL
+      AND wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+    GROUP BY match_id, bowler_id
+    HAVING COUNT(*) >= 2
+)
+SELECT COUNT(*) AS times
+FROM bat
+JOIN bowl
+  ON bowl.match_id = bat.match_id
+ AND bowl.player_id = bat.player_id","{""columns"": [""times""], ""rows"": [[6]]}",1.0,True,match,,19.57,stop,3889,1201,1019,0.01780683
+Kimi K3,moonshotai/kimi-k3,92,brutal,"cte,left-join,ratio,domain","Among batters with at least 250 runs off the bat (regular innings), who has the highest batting average (runs divided by number of times dismissed, excluding 'retired hurt')? Give the name and the average.","WITH r AS (SELECT striker_id AS pid, SUM(runs_of_bat) AS runs FROM deliveries WHERE innings <= 2 GROUP BY striker_id HAVING SUM(runs_of_bat) >= 250), o AS (SELECT player_dismissed_id AS pid, COUNT(*) AS outs FROM deliveries WHERE player_dismissed_id IS NOT NULL AND wicket_type != 'retired hurt' AND innings <= 2 GROUP BY player_dismissed_id) SELECT p.player_name, r.runs * 1.0 / o.outs AS bat_avg FROM r JOIN o ON o.pid = r.pid JOIN players p ON p.player_id = r.pid ORDER BY bat_avg DESC LIMIT 1","{""columns"": [""player_name"", ""bat_avg""], ""rows"": [[""Ravindra Jadeja"", 66.5]]}",1,"WITH runs AS (
+    SELECT striker_id AS player_id, SUM(runs_of_bat) AS runs
+    FROM deliveries
+    WHERE innings IN (1, 2)
+    GROUP BY striker_id
+),
+dismissals AS (
+    SELECT player_dismissed_id AS player_id, COUNT(*) AS times_dismissed
+    FROM deliveries
+    WHERE innings IN (1, 2)
+      AND player_dismissed_id IS NOT NULL
+      AND wicket_type <> 'retired hurt'
+    GROUP BY player_dismissed_id
+)
+SELECT p.player_name,
+       r.runs * 1.0 / d.times_dismissed AS batting_average
+FROM runs r
+JOIN dismissals d ON d.player_id = r.player_id
+JOIN players p ON p.player_id = r.player_id
+WHERE r.runs >= 250
+ORDER BY batting_average DESC
+LIMIT 1","{""columns"": [""player_name"", ""batting_average""], ""rows"": [[""Ravindra Jadeja"", 66.5]]}",1.0,True,match,,25.18,stop,3901,1454,1257,0.02135687
+Kimi K3,moonshotai/kimi-k3,93,brutal,"join,ratio,having,domain","Among bowlers with at least 10 bowler-credited wickets (regular innings), who has the best bowling strike rate (legal deliveries bowled per wicket)? Give the name and the strike rate.","SELECT p.player_name, SUM(CASE WHEN d.wide = 0 AND d.noballs = 0 THEN 1 ELSE 0 END) * 1.0 / SUM(CASE WHEN d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') THEN 1 ELSE 0 END) AS sr FROM deliveries d JOIN players p ON p.player_id = d.bowler_id WHERE d.innings <= 2 GROUP BY p.player_id HAVING SUM(CASE WHEN d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field') THEN 1 ELSE 0 END) >= 10 ORDER BY sr ASC LIMIT 1","{""columns"": [""player_name"", ""sr""], ""rows"": [[""Corbin Bosch"", 10.083333333333334]]}",1,"WITH bowler_wickets AS (
+    SELECT bowler_id, COUNT(*) AS wickets
+    FROM deliveries
+    WHERE innings IN (1, 2)
+      AND player_dismissed_id IS NOT NULL
+      AND wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+    GROUP BY bowler_id
+    HAVING COUNT(*) >= 10
+),
+legal_balls AS (
+    SELECT bowler_id, COUNT(*) AS legal_deliveries
+    FROM deliveries
+    WHERE innings IN (1, 2)
+      AND wide = 0
+      AND noballs = 0
+    GROUP BY bowler_id
+)
+SELECT p.player_name,
+       CAST(lb.legal_deliveries AS REAL) / bw.wickets AS strike_rate
+FROM bowler_wickets bw
+JOIN legal_balls lb
+  ON lb.bowler_id = bw.bowler_id
+JOIN players p
+  ON p.player_id = bw.bowler_id
+ORDER BY strike_rate ASC, p.player_name ASC
+LIMIT 1","{""columns"": [""player_name"", ""strike_rate""], ""rows"": [[""Corbin Bosch"", 10.083333333333334]]}",1.0,True,match,,64.52,stop,3895,3262,3033,0.04666485
+Kimi K3,moonshotai/kimi-k3,94,brutal,"cte,join,null,domain","What was the lowest team innings total (runs off the bat plus extras, regular innings) this season, ignoring matches marked abandoned in match_results? Give the full team name and the total.","WITH t AS (SELECT d.match_id, d.innings, d.batting_team, SUM(d.runs_of_bat + d.extras) AS r FROM deliveries d WHERE d.innings <= 2 AND d.match_id NOT IN (SELECT match_id FROM match_results WHERE match_result = 'abandoned') GROUP BY d.match_id, d.innings, d.batting_team) SELECT tm.team_name, t.r FROM t JOIN teams tm ON tm.team_code = t.batting_team ORDER BY t.r ASC LIMIT 1","{""columns"": [""team_name"", ""r""], ""rows"": [[""Delhi Capitals"", 75]]}",1,"WITH innings_totals AS (
+    SELECT
+        d.match_id,
+        d.innings,
+        d.batting_team,
+        SUM(d.runs_of_bat + d.extras) AS total
+    FROM deliveries d
+    LEFT JOIN match_results mr
+        ON mr.match_id = d.match_id
+    WHERE d.innings IN (1, 2)
+      AND (mr.match_result IS NULL OR mr.match_result <> 'abandoned')
+    GROUP BY d.match_id, d.innings, d.batting_team
+)
+SELECT
+    t.team_name,
+    it.total
+FROM innings_totals it
+JOIN teams t
+    ON t.team_code = it.batting_team
+ORDER BY it.total ASC
+LIMIT 1","{""columns"": [""team_name"", ""total""], ""rows"": [[""Delhi Capitals"", 75]]}",1.0,True,match,,44.4,stop,3894,2254,2088,0.03255218
+Kimi K3,moonshotai/kimi-k3,95,brutal,"cte,left-join,null",For how many players in batting_stats does the runs column differ from the runs off the bat they scored in deliveries during the matches covered by match_results?,"WITH s AS (SELECT striker_id AS pid, SUM(runs_of_bat) AS r FROM deliveries WHERE match_id IN (SELECT match_id FROM match_results) GROUP BY striker_id) SELECT COUNT(*) FROM batting_stats b LEFT JOIN s ON s.pid = b.player_id WHERE COALESCE(s.r, 0) != b.runs","{""columns"": [""COUNT(*)""], ""rows"": [[1]]}",1,"WITH runs_in_results AS (
+  SELECT
+    d.striker_id AS player_id,
+    SUM(d.runs_of_bat) AS runs_off_bat
+  FROM deliveries d
+  WHERE d.match_id IN (SELECT match_id FROM match_results)
+  GROUP BY d.striker_id
+)
+SELECT COUNT(*) AS players_with_different_runs
+FROM batting_stats bs
+LEFT JOIN runs_in_results r
+  ON r.player_id = bs.player_id
+WHERE bs.runs <> COALESCE(r.runs_off_bat, 0)","{""columns"": [""players_with_different_runs""], ""rows"": [[1]]}",1.0,True,match,,14.77,stop,3886,772,647,0.01179882
+Kimi K3,moonshotai/kimi-k3,96,brutal,"cte,many-to-many,join,domain",How many times did a player take at least one catch AND score at least 50 runs off the bat in the same match (regular innings)?,"WITH bat AS (SELECT match_id, striker_id AS pid FROM deliveries WHERE innings <= 2 GROUP BY match_id, striker_id HAVING SUM(runs_of_bat) >= 50), ct AS (SELECT DISTINCT d.match_id, f.player_id AS pid FROM delivery_fielders f JOIN deliveries d ON d.delivery_id = f.delivery_id WHERE d.wicket_type = 'caught' AND d.innings <= 2) SELECT COUNT(*) FROM bat JOIN ct ON ct.match_id = bat.match_id AND ct.pid = bat.pid","{""columns"": [""COUNT(*)""], ""rows"": [[57]]}",1,"WITH fifty AS (
+  SELECT match_id, striker_id AS player_id
+  FROM deliveries
+  WHERE innings IN (1, 2)
+  GROUP BY match_id, striker_id
+  HAVING SUM(runs_of_bat) >= 50
+),
+catchers AS (
+  SELECT DISTINCT d.match_id, df.player_id
+  FROM deliveries d
+  JOIN delivery_fielders df ON df.delivery_id = d.delivery_id
+  WHERE d.innings IN (1, 2)
+    AND d.wicket_type = 'caught'
+)
+SELECT COUNT(*) AS times
+FROM fifty f
+JOIN catchers c
+  ON c.match_id = f.match_id
+ AND c.player_id = f.player_id","{""columns"": [""times""], ""rows"": [[57]]}",1.0,True,match,,42.09,stop,3885,2009,1847,0.02911615
+Kimi K3,moonshotai/kimi-k3,97,brutal,"multi-join,subquery,left-join","Who is the captain of the team with the highest net run rate in the points table, and how many runs off the bat did that captain score this season?","SELECT p.player_name, COALESCE(SUM(d.runs_of_bat), 0) FROM players p LEFT JOIN deliveries d ON d.striker_id = p.player_id WHERE p.is_captain = 1 AND p.team_code = (SELECT team_code FROM points_table ORDER BY nrr DESC LIMIT 1) GROUP BY p.player_id","{""columns"": [""player_name"", ""COALESCE(SUM(d.runs_of_bat), 0)""], ""rows"": [[""Rajat Patidar"", 500]]}",1,"WITH target_team AS (
+    SELECT team_code
+    FROM points_table
+    ORDER BY nrr DESC
+    LIMIT 1
+),
+captain AS (
+    SELECT p.player_id, p.player_name
+    FROM players p
+    JOIN target_team t ON t.team_code = p.team_code
+    WHERE p.is_captain = 1
+)
+SELECT c.player_name,
+       COALESCE(SUM(d.runs_of_bat), 0) AS runs_off_bat
+FROM captain c
+LEFT JOIN deliveries d ON d.striker_id = c.player_id
+GROUP BY c.player_id, c.player_name","{""columns"": [""player_name"", ""runs_off_bat""], ""rows"": [[""Rajat Patidar"", 500]]}",1.0,True,match,,32.63,stop,3888,1546,1405,0.02263616
+Kimi K3,moonshotai/kimi-k3,98,brutal,"multi-join,case,ratio,domain","Among completed matches in match_results played at a venue that is the home ground (venues.home_team) of one of the two teams, what percentage were won by that venue's home team?","SELECT 100.0 * SUM(CASE WHEN r.match_winner = v.home_team THEN 1 ELSE 0 END) / COUNT(*) FROM match_results r JOIN matches m ON m.match_id = r.match_id JOIN venues v ON v.venue_id = m.venue_id WHERE r.match_result = 'completed' AND v.home_team IN (r.home_team, r.away_team)","{""columns"": [""100.0 * SUM(CASE WHEN r.match_winner = v.home_team THEN 1 ELSE 0 END) / COUNT(*)""], ""rows"": [[52.63157894736842]]}",1,"SELECT 100.0 * SUM(CASE WHEN mr.match_winner = v.home_team THEN 1 ELSE 0 END) / COUNT(*) AS home_team_win_percentage
+FROM match_results mr
+JOIN matches m ON m.match_id = mr.match_id
+JOIN venues v ON v.venue_id = m.venue_id
+WHERE mr.match_result = 'completed'
+  AND v.home_team IN (mr.home_team, mr.away_team)","{""columns"": [""home_team_win_percentage""], ""rows"": [[52.63157894736842]]}",1.0,True,match,,37.82,stop,3894,1888,1784,0.02742818
+Kimi K3,moonshotai/kimi-k3,99,brutal,"role-join,group,order,domain","Which batter scored the most runs off the bat against a single bowler this season? Give the batter's name, the bowler's name and the runs.","SELECT s.player_name, b.player_name, SUM(d.runs_of_bat) AS r FROM deliveries d JOIN players s ON s.player_id = d.striker_id JOIN players b ON b.player_id = d.bowler_id GROUP BY d.striker_id, d.bowler_id ORDER BY r DESC LIMIT 1","{""columns"": [""player_name"", ""player_name"", ""r""], ""rows"": [[""Virat Kohli"", ""Kagiso Rabada"", 88]]}",1,"SELECT
+  batter.player_name AS batter_name,
+  bowler.player_name AS bowler_name,
+  SUM(d.runs_of_bat) AS runs
+FROM deliveries AS d
+JOIN players AS batter
+  ON batter.player_id = d.striker_id
+JOIN players AS bowler
+  ON bowler.player_id = d.bowler_id
+GROUP BY d.striker_id, d.bowler_id
+ORDER BY runs DESC
+LIMIT 1","{""columns"": [""batter_name"", ""bowler_name"", ""runs""], ""rows"": [[""Virat Kohli"", ""Kagiso Rabada"", 88]]}",1.0,True,match,,27.11,stop,3886,1506,1404,0.02207482
+Kimi K3,moonshotai/kimi-k3,100,brutal,"role-join,cte,ratio,order,domain",For which bowling team (full name) did overseas bowlers take the highest share of its bowler-credited wickets? Give the team and the percentage.,"WITH w AS (SELECT d.bowling_team, b.nationality FROM deliveries d JOIN players b ON b.player_id = d.bowler_id WHERE d.player_dismissed_id IS NOT NULL AND d.wicket_type NOT IN ('run out','retired hurt','obstructing the field')) SELECT t.team_name, 100.0 * SUM(CASE WHEN w.nationality = 'Overseas' THEN 1 ELSE 0 END) / COUNT(*) AS pct FROM w JOIN teams t ON t.team_code = w.bowling_team GROUP BY t.team_code ORDER BY pct DESC LIMIT 1","{""columns"": [""team_name"", ""pct""], ""rows"": [[""Gujarat Titans"", 56.779661016949156]]}",1,"SELECT t.team_name,
+       100.0 * SUM(CASE WHEN p.nationality = 'Overseas' THEN 1 ELSE 0 END) / COUNT(*) AS overseas_wicket_pct
+FROM deliveries d
+JOIN players p ON p.player_id = d.bowler_id
+JOIN teams t ON t.team_code = d.bowling_team
+WHERE d.wicket_type IN ('bowled', 'caught', 'hit wicket', 'lbw', 'stumped')
+GROUP BY d.bowling_team
+ORDER BY overseas_wicket_pct DESC
+LIMIT 1","{""columns"": [""team_name"", ""overseas_wicket_pct""], ""rows"": [[""Gujarat Titans"", 56.779661016949156]]}",1.0,True,match,,9.67,stop,3886,601,468,0.00940482

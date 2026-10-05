@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agent LLM Cost & Budget Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1419;
+    --surface: #161D26;
+    --surface-2: #1E2730;
+    --border: #2A3440;
+    --text: #E6EBF0;
+    --text-dim: #8A96A3;
+    --accent: #5AC8C8;
+    --accent-ink: #06211F;
+    --good: #4ADE80;
+    --good-bg: rgba(74,222,128,0.12);
+    --warn: #F5B942;
+    --warn-bg: rgba(245,185,66,0.12);
+    --bad: #F2706B;
+    --bad-bg: rgba(242,112,107,0.12);
+    --radius: 7px;
+    --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F6F7F9;
+      --surface: #FFFFFF;
+      --surface-2: #EEF1F4;
+      --border: #D7DCE2;
+      --text: #171B20;
+      --text-dim: #5C6670;
+      --accent: #0E7C7C;
+      --accent-ink: #FFFFFF;
+      --good: #1E9E57;
+      --good-bg: rgba(30,158,87,0.10);
+      --warn: #A66A00;
+      --warn-bg: rgba(166,106,0,0.10);
+      --bad: #C53B33;
+      --bad-bg: rgba(197,59,51,0.08);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F6F7F9; --surface: #FFFFFF; --surface-2: #EEF1F4; --border: #D7DCE2;
+    --text: #171B20; --text-dim: #5C6670; --accent: #0E7C7C; --accent-ink: #FFFFFF;
+    --good: #1E9E57; --good-bg: rgba(30,158,87,0.10);
+    --warn: #A66A00; --warn-bg: rgba(166,106,0,0.10);
+    --bad: #C53B33; --bad-bg: rgba(197,59,51,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 36px 20px 64px; }
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  header p { color: var(--text-dim); margin: 0 0 28px; max-width: 70ch; font-size: 0.95rem; }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 22px;
+  }
+  .panel h2 {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin: 0 0 16px;
+    text-transform: none;
+    letter-spacing: 0.01em;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 760px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+  label { display: block; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 6px; }
+  input[type="number"], input[type="text"] {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    padding: 8px 9px;
+    border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type="text"] { font-family: var(--sans); }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { opacity: 0.5; }
+
+  .summary {
+    display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline;
+    font-size: 0.92rem; color: var(--text-dim);
+  }
+  .summary b { color: var(--text); font-family: var(--mono); font-weight: 600; }
+  .summary .good-ink { color: var(--good); }
+  .summary .bad-ink { color: var(--bad); }
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+  table { border-collapse: collapse; width: 100%; min-width: 1080px; font-size: 0.86rem; }
+  thead th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-dim);
+    font-size: 0.74rem;
+    background: var(--surface-2);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    position: sticky; top: 0;
+  }
+  tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-2); }
+  td.num, th.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  td input[type="number"] { width: 78px; padding: 6px 7px; font-size: 0.85rem; }
+  td input[type="text"] { width: 150px; padding: 6px 7px; font-size: 0.85rem; }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+  .badge.pass { background: var(--good-bg); color: var(--good); }
+  .badge.fail { background: var(--bad-bg); color: var(--bad); }
+  .badge.warn { background: var(--warn-bg); color: var(--warn); }
+
+  .pct-up { color: var(--good); }
+  .pct-down { color: var(--bad); }
+
+  .remove-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-dim);
+    width: 24px; height: 24px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;
+    line-height: 1;
+  }
+  .remove-btn:hover { border-color: var(--bad); color: var(--bad); }
+
+  .controls-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 14px 0 10px; gap: 12px; flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--sans); font-size: 0.84rem; font-weight: 600;
+    background: var(--surface-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 14px; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  select {
+    font-family: var(--sans); font-size: 0.84rem;
+    background: var(--surface-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px;
+  }
+
+  footer { margin-top: 26px; color: var(--text-dim); font-size: 0.8rem; max-width: 80ch; }
+  footer p { margin: 0 0 8px; }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Agent LLM cost &amp; budget calculator</h1>
+    <p>Set your monthly budget and your agent's per-task call pattern, then compare models on real cost — with and without prompt caching — before you even look at quality. Edit any number; your inputs are saved in this browser.</p>
+  </header>
+
+  <div class="panel">
+    <h2>Budget and task assumptions</h2>
+    <div class="grid">
+      <div>
+        <label for="budget">Monthly budget ($)</label>
+        <input type="number" id="budget" min="0" step="100">
+      </div>
+      <div>
+        <label for="tasksPerMonth">Tasks / month</label>
+        <input type="number" id="tasksPerMonth" min="0" step="1000">
+      </div>
+      <div>
+        <label for="callsPerTask">LLM calls / task</label>
+        <input type="number" id="callsPerTask" min="1" step="1">
+      </div>
+      <div>
+        <label for="repeatedTokens">Repeated context tokens / call</label>
+        <input type="number" id="repeatedTokens" min="0" step="100">
+      </div>
+      <div>
+        <label for="newTokens">New tokens / call</label>
+        <input type="number" id="newTokens" min="0" step="10">
+      </div>
+      <div>
+        <label for="outputTokens">Output tokens / call</label>
+        <input type="number" id="outputTokens" min="0" step="10">
+      </div>
+    </div>
+  </div>
+
+  <div id="summary" class="summary"></div>
+
+  <div class="controls-row">
+    <div>
+      <button class="btn primary" id="addRow">+ Add model</button>
+      <button class="btn" id="resetBtn">Reset to defaults</button>
+    </div>
+    <div>
+      <label style="display:inline;margin-right:8px;color:var(--text-dim);font-size:0.82rem;">Sort by</label>
+      <select id="sortBy">
+        <option value="monthlyCached">Monthly cost (cached)</option>
+        <option value="monthlyNoCache">Monthly cost (no cache)</option>
+        <option value="costPerQuality">Cost per quality point</option>
+        <option value="quality">Quality score</option>
+        <option value="coding">Coding score</option>
+        <option value="name">Model name</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th class="num">Input $/MTok</th>
+          <th class="num">Output $/MTok</th>
+          <th class="num">Cache write $/MTok</th>
+          <th class="num">Cache read $/MTok</th>
+          <th class="num">Quality 0–100</th>
+          <th class="num">Coding 0–100</th>
+          <th class="num">$/task no-cache</th>
+          <th class="num">$/task cached</th>
+          <th class="num">Savings</th>
+          <th class="num">Monthly no-cache</th>
+          <th class="num">Monthly cached</th>
+          <th class="num">$/quality pt</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Default rates reflect each vendor's published API pricing as of October 2026 (Anthropic, OpenAI, Google, xAI, DeepSeek) — edit them before relying on this, since rates change monthly. "Cache write" is the one-time cost of first caching the repeated block; "cache read" is the discounted cost of reusing it on every later call in the same task. Set "LLM calls / task" to 1 to see why caching doesn't help a single-shot call. xAI and DeepSeek don't publish a separate cache-write premium, so their "write" field is set equal to the input price as a simplifying assumption — their real caching is closer to "automatic and free to enable," which only helps your numbers here.</p>
+    <p>Quality scores are pre-filled from Artificial Analysis's Intelligence Index (artificialanalysis.ai/models) where a clear match existed — they're a general-capability benchmark, not your task, so treat them as a starting point and replace them with your own eval numbers where it matters. Gemini 3.1 Flash-Lite and the brand-new Gemini 4 Argon are left without a score/price respectively since no clean match or public rate existed yet at the time this was built.</p>
+    <p>The open-weight rows (Kimi, GLM, Qwen, Llama, GPT-OSS) are priced as hosted on Together AI, one of several inference providers for these weights — the same open model is often cheaper or pricier on Fireworks, Groq, OpenRouter, a cloud provider, or self-hosted, and each lab's own first-party API (where one exists, e.g. Moonshot or Z AI direct) usually differs from any third-party host too. There's no single "official" rate for an open-weight model the way there is for a closed one — swap in the numbers for whichever host you'd actually run on. None of these models have a published cache-write premium or a confirmed cache discount on Together, so their cache fields are set equal to the input price, meaning this tool won't show a caching benefit for them until you fill in real numbers from your provider. MiMo-V2.6-Pro, currently Artificial Analysis's top-ranked open-weight model, isn't included — it wasn't available on Together at the time this was built.</p>
+    <p>The new "Coding 0–100" column is Artificial Analysis's separate Coding Index (distinct from the overall Quality/Intelligence Index). Their own site renders every chart client-side, so there's no static page to pull exact numbers from for most models, and the per-model numbers floating around other comparison sites were inconsistent enough that I didn't trust them the way I didn't trust the pricing aggregators earlier in this chat. I could only confirm scores for four rows — Kimi K2.5, GLM-4.7, Qwen3.5 397B A17B, and GPT-OSS-120B — by cross-checking a secondary source that embeds Artificial Analysis's own data and matching it back to these exact prices. Every other row is left at 0 rather than guessed. If you can open artificialanalysis.ai yourself (it renders fine in a browser, just not for a fetch), the Coding Index numbers for your other candidates are on the model comparison pages — tell me the numbers and I'll drop them in.</p>
+    <p>Previous-generation rows (Claude Opus 4.1, Claude Sonnet 4.5, Claude Haiku 3.5, Gemini 2.5 Pro, Grok 4.5/4.3/Build 0.1) are still live and billable as of this build and carry verified pricing, but none have a quality score filled in — they'd mostly fallen off the current Artificial Analysis leaderboard snapshot used for the other rows, so fill those in from your own evals if you're comparing across generations. OpenAI is the exception: its older general-purpose line (GPT-4o, GPT-4.1, GPT-4-turbo, o1, o3-mini, o4-mini, GPT-3.5) is being fully shut down on October 23, 2026, with no pricing page listing for it anymore — there's no meaningful "older OpenAI model" left to add here.</p>
+    <p>Google's context caching also bills a separate hourly storage fee on top of the per-token read price, which isn't modeled here — check <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">ai.google.dev/gemini-api/docs/pricing</a> if a cache is held open for a long time. DeepSeek also runs peak/off-peak pricing (off-peak is half price, 01:00–04:00 and 06:00–10:00 UTC on weekdays excluded) — defaults above use the higher peak rate as the conservative case.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'llmCostCalcState_v1';
+
+  var DEFAULT_MODELS = [
+    { name: 'Claude Haiku 4.5',       input: 1,    output: 5,   cwrite: 1.25,  cread: 0.10, quality: 17 },
+    { name: 'Claude Sonnet 5.5',      input: 2,    output: 10,  cwrite: 2.50,  cread: 0.20, quality: 56 },
+    { name: 'Claude Opus 5.5',        input: 4,    output: 20,  cwrite: 5.00,  cread: 0.20, quality: 58 },
+    { name: 'Claude Fable 5.1',       input: 10,   output: 50,  cwrite: 12.50, cread: 0.25, quality: 53 },
+    { name: 'GPT-6 Luna',             input: 0.10, output: 0.50,cwrite: 0.125, cread: 0.01, quality: 38 },
+    { name: 'GPT-6.1 Sol',            input: 2,    output: 10,  cwrite: 2.50,  cread: 0.10, quality: 52 },
+    { name: 'GPT-6 Astra',            input: 10,   output: 50,  cwrite: 12.50, cread: 1.00, quality: 53 },
+    { name: 'Gemini 3.1 Flash-Lite',  input: 0.25, output: 1.50,cwrite: 0.25,  cread: 0.025,quality: 0 },
+    { name: 'Gemini 3.8 Flash',       input: 0.75, output: 3.75,cwrite: 0.75,  cread: 0.075,quality: 41 },
+    { name: 'Gemini 3.1 Pro',         input: 2,    output: 12,  cwrite: 2,     cread: 0.20, quality: 30 },
+    { name: 'Grok 4.7',               input: 2,    output: 6,   cwrite: 2,     cread: 0.50, quality: 46 },
+    { name: 'DeepSeek V4 Pro',        input: 1.32, output: 3.96,cwrite: 1.32,  cread: 0.044,quality: 36 },
+    { name: 'DeepSeek Flash',         input: 0.30, output: 1.20,cwrite: 0.30,  cread: 0.006,quality: 39 },
+    { name: 'Kimi K2.5 (Together AI)',        input: 0.375,output: 2.02,cwrite: 0.375, cread: 0.375,quality: 47, coding: 40 },
+    { name: 'GLM-4.7 (Together AI)',          input: 0.40, output: 1.75,cwrite: 0.40,  cread: 0.40, quality: 42, coding: 36 },
+    { name: 'Qwen3.5 397B A17B (Together AI)',input: 0.39, output: 2.34,cwrite: 0.39,  cread: 0.39, quality: 45, coding: 41 },
+    { name: 'Llama 4 Maverick (Together AI)', input: 0.27, output: 0.85,cwrite: 0.27,  cread: 0.27, quality: 10 },
+    { name: 'Llama 3.3 70B (Together AI)',    input: 0.88, output: 0.88,cwrite: 0.88,  cread: 0.88, quality: 8 },
+    { name: 'GPT-OSS-120B (Together AI)',     input: 0.039,output: 0.18,cwrite: 0.039, cread: 0.039,quality: 33, coding: 29 },
+    { name: 'Claude Opus 4.1',        input: 15,   output: 75,  cwrite: 18.75, cread: 1.50, quality: 0 },
+    { name: 'Claude Sonnet 4.5',      input: 3,    output: 15,  cwrite: 3.75,  cread: 0.30, quality: 0 },
+    { name: 'Claude Haiku 3.5',       input: 0.80, output: 4,   cwrite: 1.00,  cread: 0.08, quality: 0 },
+    { name: 'Gemini 2.5 Pro',         input: 1.25, output: 10,  cwrite: 1.25,  cread: 0.125,quality: 0 },
+    { name: 'Grok 4.5',               input: 2,    output: 6,   cwrite: 2,     cread: 0.30, quality: 0 },
+    { name: 'Grok 4.3',               input: 1.25, output: 2.50,cwrite: 1.25,  cread: 0.20, quality: 0 },
+    { name: 'Grok Build 0.1',         input: 1,    output: 2,   cwrite: 1,     cread: 0.20, quality: 0 }
+  ];
+
+  var DEFAULT_STATE = {
+    budget: 30000,
+    tasksPerMonth: 100000,
+    callsPerTask: 4,
+    repeatedTokens: 5400,
+    newTokens: 200,
+    outputTokens: 300,
+    sortBy: 'monthlyCached',
+    models: DEFAULT_MODELS
+  };
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return clone(DEFAULT_STATE);
+      var parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.models) || parsed.models.length === 0) return clone(DEFAULT_STATE);
+
+      // A saved session only has the models that existed when it was last written.
+      // If the tool's default list has since grown, merge the new ones in by name
+      // rather than letting a saved session permanently hide them. Existing rows
+      // (and any edits you made to them) are left untouched.
+      var existingNames = {};
+      parsed.models.forEach(function (m) { existingNames[m.name] = true; });
+      DEFAULT_MODELS.forEach(function (dm) {
+        if (!existingNames[dm.name]) parsed.models.push(clone(dm));
+      });
+
+      // Same idea for top-level settings, in case new ones get added later.
+      Object.keys(DEFAULT_STATE).forEach(function (key) {
+        if (key !== 'models' && !(key in parsed)) parsed[key] = DEFAULT_STATE[key];
+      });
+
+      return parsed;
+    } catch (e) {
+      return clone(DEFAULT_STATE);
+    }
+  }
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  var saveTimer = null;
+  function saveState() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable, continue without persistence */ }
+    }, 250);
+  }
+
+  var state = loadState();
+
+  var fmtMoneySmall = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 4, maximumFractionDigits: 4 });
+  var fmtMoneyWhole = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+
+  function num(v, fallback) {
+    var n = parseFloat(v);
+    return isFinite(n) ? n : (fallback || 0);
+  }
+
+  function computeModel(m) {
+    var N = Math.max(1, num(state.callsPerTask, 1));
+    var rep = num(state.repeatedTokens, 0);
+    var nw = num(state.newTokens, 0);
+    var out = num(state.outputTokens, 0);
+
+    var perCallInputNoCache = rep + nw;
+    var costPerTaskNoCache = N * (perCallInputNoCache * m.input + out * m.output) / 1e6;
+
+    var call1 = (rep * m.cwrite + nw * m.input + out * m.output);
+    var restCall = (rep * m.cread + nw * m.input + out * m.output);
+    var costPerTaskCached = (call1 + (N - 1) * restCall) / 1e6;
+
+    var tasksPerMonth = num(state.tasksPerMonth, 0);
+    var monthlyNoCache = costPerTaskNoCache * tasksPerMonth;
+    var monthlyCached = costPerTaskCached * tasksPerMonth;
+
+    var savingsPct = costPerTaskNoCache > 0 ? (1 - costPerTaskCached / costPerTaskNoCache) * 100 : 0;
+
+    var budget = num(state.budget, 0);
+    var passNoCache = monthlyNoCache <= budget;
+    var passCached = monthlyCached <= budget;
+
+    var costPerQuality = m.quality > 0 ? monthlyCached / m.quality : null;
+
+    return {
+      costPerTaskNoCache: costPerTaskNoCache,
+      costPerTaskCached: costPerTaskCached,
+      monthlyNoCache: monthlyNoCache,
+      monthlyCached: monthlyCached,
+      savingsPct: savingsPct,
+      passNoCache: passNoCache,
+      passCached: passCached,
+      costPerQuality: costPerQuality
+    };
+  }
+
+  function badge(pass, deltaLabel) {
+    var cls = pass ? 'pass' : 'fail';
+    var text = pass ? 'fits' : 'over';
+    return '<span class="badge ' + cls + '" title="' + deltaLabel + '">' + text + '</span>';
+  }
+
+  function sortModels(models) {
+    var computed = models.map(function (m, i) { return { m: m, i: i, c: computeModel(m) }; });
+    var key = state.sortBy;
+    computed.sort(function (a, b) {
+      if (key === 'name') return a.m.name.localeCompare(b.m.name);
+      if (key === 'quality') return (b.m.quality || 0) - (a.m.quality || 0);
+      if (key === 'coding') return (b.m.coding || 0) - (a.m.coding || 0);
+      if (key === 'costPerQuality') {
+        var av = a.c.costPerQuality === null ? Infinity : a.c.costPerQuality;
+        var bv = b.c.costPerQuality === null ? Infinity : b.c.costPerQuality;
+        return av - bv;
+      }
+      return a.c[key] - b.c[key];
+    });
+    return computed;
+  }
+
+  function renderAll() {
+    var tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    var ordered = sortModels(state.models);
+
+    ordered.forEach(function (entry) {
+      var idx = entry.i;
+      var m = entry.m;
+      var tr = document.createElement('tr');
+      tr.innerHTML =
+        '<td><input type="text" data-idx="' + idx + '" data-field="name" value="' + escapeAttr(m.name) + '"></td>' +
+        '<td class="num"><input type="number" min="0" step="0.01" data-idx="' + idx + '" data-field="input" value="' + m.input + '"></td>' +
+        '<td class="num"><input type="number" min="0" step="0.01" data-idx="' + idx + '" data-field="output" value="' + m.output + '"></td>' +
+        '<td class="num"><input type="number" min="0" step="0.01" data-idx="' + idx + '" data-field="cwrite" value="' + m.cwrite + '"></td>' +
+        '<td class="num"><input type="number" min="0" step="0.01" data-idx="' + idx + '" data-field="cread" value="' + m.cread + '"></td>' +
+        '<td class="num"><input type="number" min="0" max="100" step="1" data-idx="' + idx + '" data-field="quality" value="' + m.quality + '"></td>' +
+        '<td class="num"><input type="number" min="0" max="100" step="1" data-idx="' + idx + '" data-field="coding" value="' + (m.coding || 0) + '"></td>' +
+        '<td class="num" data-computed="costPerTaskNoCache" data-idx="' + idx + '"></td>' +
+        '<td class="num" data-computed="costPerTaskCached" data-idx="' + idx + '"></td>' +
+        '<td class="num" data-computed="savingsPct" data-idx="' + idx + '"></td>' +
+        '<td class="num" data-computed="monthlyNoCache" data-idx="' + idx + '"></td>' +
+        '<td class="num" data-computed="monthlyCached" data-idx="' + idx + '"></td>' +
+        '<td class="num" data-computed="costPerQuality" data-idx="' + idx + '"></td>' +
+        '<td><button class="remove-btn" data-idx="' + idx + '" title="Remove model">×</button></td>';
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('input').forEach(function (inp) {
+      inp.addEventListener('input', onFieldChange);
+    });
+    tbody.querySelectorAll('.remove-btn').forEach(function (btn) {
+      btn.addEventListener('click', onRemoveRow);
+    });
+
+    updateComputedCells();
+  }
+
+  function escapeAttr(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  function onFieldChange(e) {
+    var idx = parseInt(e.target.getAttribute('data-idx'), 10);
+    var field = e.target.getAttribute('data-field');
+    var model = state.models[idx];
+    if (!model) return;
+    if (field === 'name') {
+      model.name = e.target.value;
+    } else {
+      model[field] = num(e.target.value, 0);
+    }
+    saveState();
+    updateComputedCells();
+  }
+
+  function onRemoveRow(e) {
+    var idx = parseInt(e.target.getAttribute('data-idx'), 10);
+    state.models.splice(idx, 1);
+    saveState();
+    renderAll();
+  }
+
+  function updateComputedCells() {
+    var tbody = document.getElementById('tbody');
+    var budget = num(state.budget, 0);
+
+    state.models.forEach(function (m, idx) {
+      var c = computeModel(m);
+      setCell(tbody, idx, 'costPerTaskNoCache', fmtMoneySmall.format(c.costPerTaskNoCache));
+      setCell(tbody, idx, 'costPerTaskCached', fmtMoneySmall.format(c.costPerTaskCached));
+
+      var savClass = c.savingsPct >= 0 ? 'pct-up' : 'pct-down';
+      setCell(tbody, idx, 'savingsPct', '<span class="' + savClass + '">' + c.savingsPct.toFixed(0) + '%</span>');
+
+      var deltaNo = fmtMoneyWhole.format(Math.abs(c.monthlyNoCache - budget));
+      var deltaCached = fmtMoneyWhole.format(Math.abs(c.monthlyCached - budget));
+      setCell(tbody, idx, 'monthlyNoCache', fmtMoneyWhole.format(c.monthlyNoCache) + badge(c.passNoCache, (c.passNoCache ? deltaNo + ' under budget' : deltaNo + ' over budget')));
+      setCell(tbody, idx, 'monthlyCached', fmtMoneyWhole.format(c.monthlyCached) + badge(c.passCached, (c.passCached ? deltaCached + ' under budget' : deltaCached + ' over budget')));
+
+      setCell(tbody, idx, 'costPerQuality', c.costPerQuality === null ? '—' : fmtMoneyWhole.format(c.costPerQuality));
+    });
+
+    renderSummary();
+  }
+
+  function setCell(tbody, idx, field, html) {
+    var cell = tbody.querySelector('[data-computed="' + field + '"][data-idx="' + idx + '"]');
+    if (cell) cell.innerHTML = html;
+  }
+
+  function renderSummary() {
+    var budget = num(state.budget, 0);
+    var total = state.models.length;
+    var fitsCached = 0, fitsNoCache = 0;
+    state.models.forEach(function (m) {
+      var c = computeModel(m);
+      if (c.passCached) fitsCached++;
+      if (c.passNoCache) fitsNoCache++;
+    });
+    document.getElementById('summary').innerHTML =
+      '<span><b>' + fitsCached + ' / ' + total + '</b> models fit your ' + fmtMoneyWhole.format(budget) + '/mo budget with caching</span>' +
+      '<span><b>' + fitsNoCache + ' / ' + total + '</b> fit without caching</span>' +
+      '<span><b>' + num(state.callsPerTask, 1) + '</b> calls/task · <b>' + num(state.tasksPerMonth, 0).toLocaleString() + '</b> tasks/mo</span>';
+  }
+
+  function bindGlobalInputs() {
+    var map = ['budget', 'tasksPerMonth', 'callsPerTask', 'repeatedTokens', 'newTokens', 'outputTokens'];
+    map.forEach(function (id) {
+      var el = document.getElementById(id);
+      el.value = state[id];
+      el.addEventListener('input', function () {
+        state[id] = num(el.value, 0);
+        saveState();
+        updateComputedCells();
+      });
+    });
+
+    var sortEl = document.getElementById('sortBy');
+    sortEl.value = state.sortBy;
+    sortEl.addEventListener('change', function () {
+      state.sortBy = sortEl.value;
+      saveState();
+      renderAll();
+    });
+
+    document.getElementById('addRow').addEventListener('click', function () {
+      state.models.push({ name: 'New model', input: 1, output: 5, cwrite: 1.25, cread: 0.1, quality: 0 });
+      saveState();
+      renderAll();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+      if (!confirm('Reset all models and assumptions to defaults? This clears your saved edits.')) return;
+      state = clone(DEFAULT_STATE);
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      bindGlobalInputs();
+      renderAll();
+    });
+  }
+
+  bindGlobalInputs();
+  renderAll();
+})();
+</script>
+</body>
+</html>
